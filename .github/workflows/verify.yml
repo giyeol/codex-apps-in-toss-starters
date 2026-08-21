@@ -24,7 +24,9 @@ jobs:
       fail-fast: false
       matrix:
         project: [starter-kits/01-weekend-activities, starter-kits/02-habit-challenge, starter-kits/03-travel-style-test, starter-kits/04-gift-finder, complete-examples/01-weekend-activities, complete-examples/02-habit-challenge, complete-examples/03-travel-style-test, complete-examples/04-gift-finder]
-    defaults: { run: { working-directory: ${{ matrix.project }} } }
+    defaults:
+      run:
+        working-directory: "${{ matrix.project }}"
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
