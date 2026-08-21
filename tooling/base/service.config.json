@@ -1,0 +1,9 @@
+{
+  "appName": "{{COURSE_APP_NAME}}",
+  "displayName": "{{COURSE_DISPLAY_NAME}}",
+  "tagline": "{{COURSE_TAGLINE}}",
+  "featureName": "{{COURSE_FEATURE_NAME}}",
+  "primaryColor": "{{COURSE_PRIMARY_COLOR}}",
+  "configuredForQr": false,
+  "giftApiUrl": null
+}

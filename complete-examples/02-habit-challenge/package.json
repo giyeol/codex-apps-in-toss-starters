@@ -1,0 +1,49 @@
+{
+  "name": "habit-challenge-starter",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.8.0 <25"
+  },
+  "scripts": {
+    "dev": "vite",
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "validate:config": "node scripts/validate-config.mjs",
+    "ready:qr": "node scripts/validate-config.mjs --qr",
+    "build:qr": "pnpm ready:qr && pnpm check && pnpm build",
+    "test": "vitest run",
+    "typecheck": "tsc -b",
+    "check": "pnpm validate:config && pnpm typecheck && pnpm test",
+    "build": "pnpm validate:config && vite build && ait build",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@apps-in-toss/web-framework": "3.0.2",
+    "@emotion/react": "^11.0.0",
+    "@toss/tds-colors": "latest",
+    "@toss/tds-mobile": "latest",
+    "@toss/tds-mobile-ait": "latest",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@apps-in-toss/devtools": "^3.0.4",
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "prettier": "^3.4.2",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0",
+    "vitest": "^3.2.4"
+  }
+}

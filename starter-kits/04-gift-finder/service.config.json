@@ -1,0 +1,9 @@
+{
+  "appName": "course-gift-finder",
+  "displayName": "상황별 선물 찾기",
+  "tagline": "고민은 줄이고, 전하고 싶은 마음은 선명하게",
+  "featureName": "giftFinder",
+  "primaryColor": "#C7475D",
+  "configuredForQr": false,
+  "giftApiUrl": null
+}

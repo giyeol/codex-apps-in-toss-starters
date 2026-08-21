@@ -1,0 +1,17 @@
+{
+  "name": "codex-apps-in-toss-starters-tooling",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.8.0 <25"
+  },
+  "scripts": {
+    "generate": "node tooling/scripts/generate-kits.mjs",
+    "generate:check": "node tooling/scripts/generate-kits.mjs --check",
+    "capture:examples": "node tooling/scripts/capture-result-examples.mjs",
+    "public:safety": "node tooling/scripts/public-safety.mjs",
+    "verify:projects": "node tooling/scripts/verify-projects.mjs",
+    "test:tooling": "node --test tooling/tests/*.test.mjs"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "appName": "course-travel-style-test",
+  "displayName": "여행 스타일 테스트",
+  "tagline": "여섯 번의 선택으로 만나는 나의 여행 방식",
+  "featureName": "travelStyleTest",
+  "primaryColor": "#6652CC",
+  "configuredForQr": false,
+  "giftApiUrl": null
+}

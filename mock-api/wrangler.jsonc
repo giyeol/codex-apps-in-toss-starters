@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "course-gift-finder-mock-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-20",
+  "ratelimits": [{ "name": "GIFT_RATE_LIMITER", "namespace_id": "20260821", "simple": { "limit": 120, "period": 60 } }]
+}

@@ -1,0 +1,49 @@
+name: verify
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  generated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24.8.0 }
+      - run: corepack enable
+      - run: pnpm test:tooling
+      - run: pnpm generate:check
+      - run: pnpm public:safety
+  projects:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [starter-kits/01-weekend-activities, starter-kits/02-habit-challenge, starter-kits/03-travel-style-test, starter-kits/04-gift-finder, complete-examples/01-weekend-activities, complete-examples/02-habit-challenge, complete-examples/03-travel-style-test, complete-examples/04-gift-finder]
+    defaults: { run: { working-directory: ${{ matrix.project }} } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24.8.0 }
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm check
+      - run: rm -f ./*.ait
+      - run: pnpm build
+      - run: test "$(find . -maxdepth 1 -type f -name '*.ait' | wc -l | tr -d ' ')" = "1"
+  mock-api:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults: { run: { working-directory: mock-api } }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24.8.0 }
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check

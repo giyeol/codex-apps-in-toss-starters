@@ -1,0 +1,9 @@
+{
+  "appName": "course-habit-challenge",
+  "displayName": "7일 습관 챌린지",
+  "tagline": "작게 시작하고, 매일 이어가는 변화",
+  "featureName": "habitChallenge",
+  "primaryColor": "#14805E",
+  "configuredForQr": false,
+  "giftApiUrl": null
+}

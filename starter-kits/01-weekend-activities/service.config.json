@@ -1,0 +1,9 @@
+{
+  "appName": "course-weekend-activities",
+  "displayName": "주말 활동 모음",
+  "tagline": "가까운 곳에서 시작하는 나만의 주말",
+  "featureName": "weekendActivities",
+  "primaryColor": "#D9593D",
+  "configuredForQr": false,
+  "giftApiUrl": null
+}
