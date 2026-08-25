@@ -15,7 +15,7 @@ Node.js 24.8.0 이상 25 미만, pnpm 11.9.0 기준이에요. 로컬 PASS는 재
 | starter 전체 브라우저 흐름                 | PENDING | 새 상태에서 네 starter의 전체 분기와 저장 복원을 수동 확인          |
 | QR/기기 흐름                               | PENDING | 최신 QR과 토스 앱에서 실제 기기 확인                                |
 | live Mock API                              | PENDING | 수동 workflow 승인 뒤 HTTPS 응답·오류 경로 확인                     |
-| 공개·출판                                  | READY   | 공개 후보 안전 검사·MIT 라이선스 확인, GitHub visibility 확인 대기   |
+| 공개·출판                                  | PASS    | GitHub PUBLIC·HTTP 200, `ce77e9a`, Actions `32890336164`             |
 | 릴리스                                     | PENDING | 콘솔 업로드·심사·배포 승인 후 검증                                  |
 
 PENDING 행은 로컬 빌드가 성공해도 PASS로 바꾸지 않아요.

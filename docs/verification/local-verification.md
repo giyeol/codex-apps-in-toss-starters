@@ -15,4 +15,4 @@
 | starter 04 gift | 446435 |
 | complete 04 gift | 446435 |
 
-local mock-api check와 complete 대표 상태 4개의 브라우저 캡처는 PASS예요. starter 전체 브라우저 분기, Cloudflare dry-run/live, QR/기기, 수동 콘솔 업로드, review, release, revenue는 모두 PENDING이에요. 공개 후보는 MIT 라이선스, 현재 작업 트리와 기존 두 커밋의 안전 검사를 통과했으며, 실제 공개 여부는 GitHub repository visibility 영수증으로 별도 확인해요.
+local mock-api check와 complete 대표 상태 4개의 브라우저 캡처는 PASS예요. starter 전체 브라우저 분기, Cloudflare dry-run/live, QR/기기, 수동 콘솔 업로드, review, release, revenue는 모두 PENDING이에요. 공개 후보는 MIT 라이선스와 Git 이력 안전 검사를 통과했고, GitHub visibility `PUBLIC`, 비인증 HTTP `200`, 코드 커밋 `ce77e9a`, [Actions verify `32890336164`](https://github.com/giyeol/codex-apps-in-toss-starters/actions/runs/32890336164) PASS를 확인했어요.
