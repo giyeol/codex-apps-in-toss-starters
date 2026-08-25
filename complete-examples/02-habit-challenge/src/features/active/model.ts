@@ -1,7 +1,15 @@
-export type CheckIn = { date: string; done: boolean; memo: string };
+export const habitMoods = ["fresh", "calm", "proud"] as const;
+export type HabitMood = (typeof habitMoods)[number];
+export type CheckIn = {
+  date: string;
+  done: boolean;
+  memo: string;
+  mood?: HabitMood;
+};
 export type HabitState = { habit: string; records: CheckIn[] };
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-export const validHabitName = (value: string) => value.trim().length > 0 && value.trim().length <= 80;
+export const validHabitName = (value: string) =>
+  value.trim().length > 0 && value.trim().length <= 80;
 
 export const validHabitState = (value: unknown): value is HabitState => {
   if (!value || typeof value !== "object") return false;
@@ -18,7 +26,9 @@ export const validHabitState = (value: unknown): value is HabitState => {
         DATE.test(record.date) &&
         typeof record.done === "boolean" &&
         typeof record.memo === "string" &&
-        record.memo.length <= 80,
+        record.memo.length <= 80 &&
+        (record.mood === undefined ||
+          habitMoods.includes(record.mood as HabitMood)),
     )
   );
 };
@@ -34,7 +44,11 @@ function previousDate(date: string) {
   return localDate(cursor);
 }
 export function streak(items: CheckIn[], anchor = localDate()) {
-  const records = new Map(items.filter((item) => item.date <= anchor).map((item) => [item.date, item.done]));
+  const records = new Map(
+    items
+      .filter((item) => item.date <= anchor)
+      .map((item) => [item.date, item.done]),
+  );
   let cursor = records.has(anchor) ? anchor : previousDate(anchor);
   if (records.get(cursor) !== true) return 0;
   let count = 0;
@@ -48,7 +62,7 @@ export function exampleCheckIns(anchor = localDate()): CheckIn[] {
   return [2, 1, 0].map((daysAgo) => {
     let date = anchor;
     for (let index = 0; index < daysAgo; index += 1) date = previousDate(date);
-    return { date, done: true, memo: "예시 달성" };
+    return { date, done: true, memo: "예시 달성", mood: "proud" };
   });
 }
 export function localDate(date = new Date()) {

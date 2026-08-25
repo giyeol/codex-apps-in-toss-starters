@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "books.svg": {
+      "sha256": "85091767161e3efbfbccffd5c95193c6d8587172204057b1641179a2a9d99ba8",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F4DA.svg"
+    },
+    "cake.svg": {
+      "sha256": "78d0ab6fa22f5d12b112f2f2c7cba9834bb7009f186a5863af8e770e758de91e",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F370.svg"
+    },
+    "candle.svg": {
+      "sha256": "3524e0d9cd78359d126e62ca5035d98fff11317cb79c5f5cacf4b0d2745ffbeb",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F56F.svg"
+    },
+    "cityscape.svg": {
+      "sha256": "6579e9e54d9eb1b1722805e1cd675eb55aeca9b2baaedd4d2ecd5804e4328a64",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F307.svg"
+    },
+    "compass.svg": {
+      "sha256": "2fe212aacd03460c1a5adb96ca909524509b7a75ebaf22a321595728f9a62203",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F9ED.svg"
+    },
+    "croissant.svg": {
+      "sha256": "9bab3d23d813ab21f8fdd65cad0bb09ab95a96d5f46f2cc5d9d24e50a21630aa",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F950.svg"
+    },
+    "fire.svg": {
+      "sha256": "cd7c44d2a679e5704939be17cc5ce41e17e768893081758db5247cfbbcd292ee",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F525.svg"
+    },
+    "gift.svg": {
+      "sha256": "112c4f7e56c203a7f95c8091f52c2b4f38b8b4fb006d39b0627d5f57a6adaf16",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F381.svg"
+    },
+    "map.svg": {
+      "sha256": "1d2fe050b6504a3ad7a311a186c3c9449ad604d724fb77386620010fe2ab6450",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F5FA.svg"
+    },
+    "plant.svg": {
+      "sha256": "304fabd805cda3adbc4c8748cbb0e0f9c2b19eeaf0a3fb25e7aad1c0e14f35ea",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1FAB4.svg"
+    },
+    "seedling.svg": {
+      "sha256": "4f584573b7aff3664596eeb25f718f6290b1a16d5a37502c44207f3433c335b0",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F331.svg"
+    },
+    "smile.svg": {
+      "sha256": "798fd4d48cc003d8740b1919323eb851b8dbecb4ad2b390063bd173539beae33",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F60A.svg"
+    },
+    "tea.svg": {
+      "sha256": "e090f37e6a21683149f2746801ea65dcca4fa585b1e47f1e0c09801028dd6cf7",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F375.svg"
+    },
+    "tumbler.svg": {
+      "sha256": "515e48aad44e878e6d90410dcd97a76f41b2ef3fa0a52029a5a73fb0d2c996bf",
+      "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1/dist/svg/u1F964.svg"
+    }
+  },
+  "source": "https://raw.githubusercontent.com/toss/tossface/v1.6.1",
+  "version": "v1.6.1"
+}

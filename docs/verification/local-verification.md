@@ -6,13 +6,13 @@
 
 | 프로젝트 | artifact bytes |
 | --- | ---: |
-| starter 01 weekend | 431024 |
-| complete 01 weekend | 431026 |
-| starter 02 habit | 431466 |
-| complete 02 habit | 431498 |
-| starter 03 travel | 431317 |
-| complete 03 travel | 431314 |
-| starter 04 gift | 431038 |
-| complete 04 gift | 431034 |
+| starter 01 weekend | 445727 |
+| complete 01 weekend | 445726 |
+| starter 02 habit | 446759 |
+| complete 02 habit | 446789 |
+| starter 03 travel | 446364 |
+| complete 03 travel | 446364 |
+| starter 04 gift | 446435 |
+| complete 04 gift | 446435 |
 
-local mock-api check와 complete 대표 상태 4개의 브라우저 캡처는 PASS예요. starter 전체 브라우저 분기, Cloudflare dry-run/live, QR/기기, 수동 콘솔 업로드, publication, review, release, revenue는 모두 PENDING이에요. 저장소는 GitHub private 상태로 커밋·푸시했으며 공개 전환은 별도 승인 전까지 PENDING이에요.
+local mock-api check와 complete 대표 상태 4개의 브라우저 캡처는 PASS예요. starter 전체 브라우저 분기, Cloudflare dry-run/live, QR/기기, 수동 콘솔 업로드, review, release, revenue는 모두 PENDING이에요. 공개 후보는 MIT 라이선스, 현재 작업 트리와 기존 두 커밋의 안전 검사를 통과했으며, 실제 공개 여부는 GitHub repository visibility 영수증으로 별도 확인해요.

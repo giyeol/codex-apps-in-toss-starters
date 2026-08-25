@@ -8,6 +8,22 @@ export type GiftInput = {
   budget: (typeof budgets)[number];
   occasion: (typeof occasions)[number];
 };
+export const giftSteps = [
+  "recipient",
+  "budget",
+  "occasion",
+  "review",
+  "results",
+] as const;
+export type GiftStep = (typeof giftSteps)[number];
+
+export function nextGiftStep(step: GiftStep): GiftStep {
+  return giftSteps[Math.min(giftSteps.indexOf(step) + 1, giftSteps.length - 1)];
+}
+
+export function previousGiftStep(step: GiftStep): GiftStep {
+  return giftSteps[Math.max(giftSteps.indexOf(step) - 1, 0)];
+}
 type GiftResult = { items: Gift[]; source: "mock-api" | "local-fallback" };
 type Options = {
   apiUrl: string | null;

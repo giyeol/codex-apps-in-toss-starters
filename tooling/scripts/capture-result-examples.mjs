@@ -18,45 +18,50 @@ const targets = [
     id: "01-weekend-activities",
     url: "http://127.0.0.1:4171/",
     prepare: `
-      localStorage.removeItem("course.weekend.saved.v1");
-      document.querySelector('[aria-label="동네 독립서점 산책 저장"]')?.click();
+      click('[data-demo="weekend-activity-book"]');
+      await wait(260);
+      click('[data-demo="weekend-save"]');
+      await wait(2_100);
+      click('[aria-label="활동 목록으로 돌아가기"]');
     `,
-    ready: ".weekend-count b",
+    ready: '[data-demo="weekend-list"]',
   },
   {
     id: "02-habit-challenge",
     url: "http://127.0.0.1:4172/",
     prepare: `
-      localStorage.removeItem("course.habit.v1");
-      [...document.querySelectorAll("button")]
-        .find((button) => button.textContent?.includes("3일 예시 채우기"))
-        ?.click();
+      click('[data-demo="habit-fill-example"]');
     `,
-    ready: ".week-day.done",
+    ready: '[data-demo="habit-streak"]',
   },
   {
     id: "03-travel-style-test",
     url: "http://127.0.0.1:4173/",
     prepare: `
-      [...document.querySelectorAll("button")]
-        .find((button) => button.textContent?.includes("여행 스타일 알아보기"))
-        ?.click();
+      click('[data-demo="travel-start"]');
       for (let index = 0; index < 6; index += 1) {
-        await new Promise((resolve) => setTimeout(resolve, 80));
-        document.querySelectorAll(".quiz-choice")[2]?.click();
+        await wait(260);
+        click('[data-demo="travel-choice-2"]');
       }
     `,
-    ready: ".quiz-result",
+    ready: '[data-demo="travel-result"]',
   },
   {
     id: "04-gift-finder",
     url: "http://127.0.0.1:4174/",
     prepare: `
-      [...document.querySelectorAll("button")]
-        .find((button) => button.textContent?.includes("선물 추천받기"))
-        ?.click();
+      click('[data-demo="gift-recipient-family"]');
+      click('[data-demo="gift-next"]');
+      await wait(260);
+      click('[data-demo="gift-budget-over-50000"]');
+      click('[data-demo="gift-next"]');
+      await wait(260);
+      click('[data-demo="gift-occasion-housewarming"]');
+      click('[data-demo="gift-next"]');
+      await wait(260);
+      click('[data-demo="gift-next"]');
     `,
-    ready: ".gift-results",
+    ready: '[data-demo="gift-results"]',
   },
 ];
 
@@ -197,21 +202,43 @@ async function capture(target, executable) {
       screenWidth: width,
       width,
     });
+    await client.send("Emulation.setEmulatedMedia", {
+      features: [{ name: "prefers-reduced-motion", value: "reduce" }],
+    });
     await client.send("Page.navigate", { url: target.url });
     await waitForSelector(client, ".app-shell");
     await evaluate(client, "document.fonts.ready");
     await evaluate(
       client,
-      `(async () => { ${target.prepare} await new Promise((resolve) => setTimeout(resolve, 240)); })()`,
+      `(async () => {
+        const wait = (milliseconds) =>
+          new Promise((resolve) => setTimeout(resolve, milliseconds));
+        const click = (selector) => {
+          const element = document.querySelector(selector);
+          if (!(element instanceof HTMLElement)) {
+            throw new Error("Capture target not found: " + selector);
+          }
+          element.click();
+        };
+        ${target.prepare}
+        await wait(260);
+      })()`,
     );
     await waitForSelector(client, target.ready);
     await evaluate(
       client,
-      `(() => {
+      `(async () => {
+        await Promise.all(
+          [...document.images].map((image) => image.decode().catch(() => {})),
+        );
         window.scrollTo(0, 0);
+        const footer = document.querySelector(".course-footer");
+        if (footer instanceof HTMLElement) footer.style.display = "none";
         [...document.querySelectorAll("button")]
           .filter((button) => button.textContent?.trim() === "AIT")
-          .forEach((button) => { button.style.display = "none"; });
+          .forEach((button) => {
+            button.style.display = "none";
+          });
       })()`,
     );
     const screenshot = await client.send("Page.captureScreenshot", {

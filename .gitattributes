@@ -1,0 +1,2 @@
+# Preserve the upstream Tossface license verbatim, including its line endings.
+**/public/tossface/LICENSE whitespace=-blank-at-eol

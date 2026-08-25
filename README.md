@@ -1,6 +1,6 @@
 # Apps in Toss 수업용 스타터킷
 
-비공식 교육 자료예요. Toss 또는 Apps in Toss의 공식 문서·지원 채널을 대체하지 않으며, 현재 공개 출판과 라이선스는 모두 `PENDING`이에요.
+비공식 교육 자료예요. Toss 또는 Apps in Toss의 공식 문서·지원 채널을 대체하지 않아요. 이 저장소의 코드와 문서는 [MIT 라이선스](LICENSE)로 공개하며, 포함된 토스페이스 자산은 각 폴더의 별도 라이선스와 [토스페이스 저작권 안내](https://toss.im/tossface/copyright)를 따라요.
 
 ## 폴더 지도
 

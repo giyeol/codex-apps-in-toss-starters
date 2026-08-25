@@ -7,6 +7,7 @@
     "node": ">=24.8.0 <25"
   },
   "scripts": {
+    "sync:tossface": "node tooling/scripts/sync-tossface-assets.mjs",
     "generate": "node tooling/scripts/generate-kits.mjs",
     "generate:check": "node tooling/scripts/generate-kits.mjs --check",
     "capture:examples": "node tooling/scripts/capture-result-examples.mjs",

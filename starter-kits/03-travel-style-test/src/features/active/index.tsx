@@ -1,42 +1,69 @@
-import { Button } from "@toss/tds-mobile";
+import {
+  Badge,
+  Button,
+  FixedBottomCTA,
+  ListRow,
+  ProgressBar,
+  Toast,
+  Top,
+} from "@toss/tds-mobile";
 import { useState } from "react";
 import { questions, results } from "../../content/quiz";
 import { Icon } from "../../ui/Icon";
+import { TossfaceEmoji } from "../../ui/TossfaceEmoji";
+import type { TossfaceName } from "../../ui/tossface";
+import { useTransientToast } from "../../ui/useTransientToast";
 import { resolveResult } from "./model";
 
 const isComplete = String("starter") === "complete";
-const choiceLabels = ["A", "B", "C"];
+const resultEmoji: Record<string, TossfaceName> = {
+  balance: "map",
+  explorer: "compass",
+  planner: "cityscape",
+};
 
 export function ActiveFeature() {
   const [answers, setAnswers] = useState<number[]>([]);
   const [started, setStarted] = useState(false);
-  const [copyState, setCopyState] = useState<"idle" | "done" | "failed">(
-    "idle",
-  );
+  const toast = useTransientToast();
+
   const reset = () => {
     setAnswers([]);
     setStarted(false);
-    setCopyState("idle");
+    toast.clear();
   };
 
   if (!started) {
     return (
-      <section className="surface quiz-intro">
-        <div className="quiz-art" aria-hidden="true">
-          <span className="quiz-art-icon">
-            <Icon name="compass" size={30} />
-          </span>
+      <section className="screen screen-enter quiz-intro">
+        <Top
+          subtitleBottom="여섯 번의 빠른 선택으로 잘 맞는 여행 방식을 찾아드려요."
+          title="나는 어떤 여행자일까요?"
+        />
+        <div className="center-visual travel-visual" aria-hidden="true">
+          <TossfaceEmoji name="compass" size={112} />
         </div>
-        <h2>나는 어떤 여행자일까요?</h2>
-        <p>익숙한 선택 여섯 가지로 나에게 잘 맞는 여행 방식을 찾아봐요.</p>
-        <div className="quiz-facts" aria-label="테스트 안내">
-          <span className="status-chip">6개 질문</span>
-          <span className="status-chip">약 1분</span>
-          <span className="status-chip">3가지 결과</span>
+        <div className="fact-badges" aria-label="테스트 안내">
+          <Badge color="elephant" size="medium" variant="weak">
+            6개 질문
+          </Badge>
+          <Badge color="elephant" size="medium" variant="weak">
+            약 1분
+          </Badge>
+          <Badge color="blue" size="medium" variant="weak">
+            3가지 결과
+          </Badge>
         </div>
-        <Button display="full" onClick={() => setStarted(true)}>
+        <div className="intro-note">
+          <strong>정답은 없어요</strong>
+          <p>지금 마음에 더 가까운 답을 가볍게 골라보세요.</p>
+        </div>
+        <FixedBottomCTA
+          data-demo="travel-start"
+          onClick={() => setStarted(true)}
+        >
           여행 스타일 알아보기
-        </Button>
+        </FixedBottomCTA>
       </section>
     );
   }
@@ -51,110 +78,120 @@ export function ActiveFeature() {
         await navigator.clipboard.writeText(
           `${result.name}: ${result.description}`,
         );
-        setCopyState("done");
+        toast.show("결과 문구를 복사했어요");
       } catch {
-        setCopyState("failed");
+        toast.show("이 환경에서는 복사할 수 없어요");
       }
     };
+
     return (
-      <section className="surface quiz-result">
-        <div className="result-visual" aria-hidden="true">
-          <span className="result-emblem">
-            <Icon name="compass" size={39} />
-          </span>
+      <section
+        className="screen screen-enter quiz-result"
+        data-demo="travel-result"
+      >
+        <Top subtitleTop="나의 여행 스타일" title={result.name} />
+        <div className="result-hero" aria-hidden="true">
+          <TossfaceEmoji
+            name={resultEmoji[result.id] ?? "compass"}
+            size={104}
+          />
         </div>
-        <div className="result-copy">
-          <span className="eyebrow">MY TRAVEL TYPE</span>
-          <h2>{result.name}</h2>
+        <div className="result-content">
           <p className="result-description">{result.description}</p>
-          <div className="result-keywords">
+          <div className="keyword-list">
             {result.keywords?.map((keyword) => (
-              <span className="status-chip" key={keyword}>
+              <Badge color="blue" key={keyword} size="medium" variant="weak">
                 #{keyword}
-              </span>
+              </Badge>
             ))}
           </div>
           {result.note && (
-            <div className="result-tip">
-              <Icon name="sparkle" size={19} />
-              <p>
-                <strong>여행 팁</strong>
-                {result.note}
-              </p>
+            <div className="tip-panel">
+              <TossfaceEmoji name="map" size={42} />
+              <span>
+                <strong>이렇게 여행해 보세요</strong>
+                <p>{result.note}</p>
+              </span>
             </div>
           )}
-          <div className="result-actions">
-            {isComplete && (
-              <Button display="full" onClick={copy} variant="weak">
-                <Icon name="copy" size={18} /> 결과 문구 복사하기
-              </Button>
-            )}
-            <Button display="full" onClick={reset}>
-              다시 해보기
-            </Button>
-          </div>
           {isComplete && (
-            <p aria-live="polite" className="copy-feedback">
-              {copyState === "done"
-                ? "결과 문구를 복사했어요."
-                : copyState === "failed"
-                  ? "이 환경에서는 복사할 수 없어요. 문구를 직접 선택해 주세요."
-                  : "친구에게 내 여행 스타일을 알려보세요."}
-            </p>
+            <Button display="full" onClick={copy} variant="weak">
+              결과 문구 복사하기
+            </Button>
           )}
         </div>
+        <FixedBottomCTA onClick={reset}>다시 해보기</FixedBottomCTA>
+        <Toast
+          higherThanCTA
+          onClose={toast.clear}
+          open={Boolean(toast.message)}
+          position="bottom"
+          text={toast.message ?? ""}
+        />
       </section>
     );
   }
 
   const question = questions[answers.length];
-  const progress = ((answers.length + 1) / questions.length) * 100;
+  const progress = (answers.length + 1) / questions.length;
   return (
-    <section className="surface quiz-question">
-      <div className="quiz-progress-head">
+    <section className="screen screen-enter quiz-question">
+      <div className="question-navigation">
         <button
           aria-label={
             answers.length === 0
               ? "처음으로 돌아가기"
               : "이전 질문으로 돌아가기"
           }
-          className="icon-button quiz-back"
+          className="icon-button touch-target"
           onClick={() => {
             if (answers.length === 0) setStarted(false);
             else setAnswers(answers.slice(0, -1));
           }}
           type="button"
         >
-          <Icon name="arrow-left" size={19} />
+          <Icon name="arrow-left" />
         </button>
         <span>
-          질문 {answers.length + 1} / {questions.length}
+          {answers.length + 1} / {questions.length}
         </span>
       </div>
-      <div
-        aria-label={`테스트 진행률 ${Math.round(progress)}%`}
-        aria-valuemax={100}
-        aria-valuemin={0}
-        aria-valuenow={Math.round(progress)}
-        className="progress-track"
-        role="progressbar"
-      >
-        <div className="progress-bar" style={{ width: `${progress}%` }} />
+      <div className="progress-section">
+        <ProgressBar
+          aria-label={`테스트 진행률 ${Math.round(progress * 100)}%`}
+          color="var(--course-primary)"
+          progress={progress}
+          size="bold"
+        />
       </div>
-      <h2>{question.prompt}</h2>
-      <div className="quiz-choices">
+      <Top
+        subtitleTop="지금 마음에 가까운 답을 골라주세요"
+        title={question.prompt}
+      />
+      <div className="choice-list">
         {question.choices.map((choice, index) => (
           <button
-            className="quiz-choice"
+            aria-label={`${choice.label}, ${choice.hint}`}
+            className="list-row-button choice-row"
+            data-demo={`travel-choice-${index}`}
             key={choice.label}
             onClick={() => setAnswers([...answers, choice.score])}
             type="button"
           >
-            <span className="quiz-choice-index">{choiceLabels[index]}</span>
-            <span>
-              <strong>{choice.label}</strong>
-              <span>{choice.hint}</span>
-            </span>
+            <ListRow
+              as="div"
+              arrowType="right"
+              border="none"
+              contents={
+                <span className="row-copy">
+                  <strong>{choice.label}</strong>
+                  <span>{choice.hint}</span>
+                </span>
+              }
+              left={<span className="choice-index">{index + 1}</span>}
+              verticalPadding="xlarge"
+              withTouchEffect
+            />
           </button>
         ))}
       </div>

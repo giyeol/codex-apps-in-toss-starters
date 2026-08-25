@@ -1,6 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { fallbackGifts } from "../../content/fallback-gifts";
-import { findGifts, localRecommendations, type GiftInput } from "./model";
+import {
+  findGifts,
+  localRecommendations,
+  nextGiftStep,
+  previousGiftStep,
+  type GiftInput,
+} from "./model";
 
 describe("gifts", () => {
   const input: GiftInput = {
@@ -81,12 +87,10 @@ describe("gifts", () => {
       findGifts(input, {
         apiUrl: "https://api.example.test/v1/gifts",
         fallback: fallbackGifts,
-        fetcher: vi
-          .fn()
-          .mockResolvedValue({
-            ok: true,
-            json: async () => ({ items: [item] }),
-          }),
+        fetcher: vi.fn().mockResolvedValue({
+          ok: true,
+          json: async () => ({ items: [item] }),
+        }),
       }),
     ).resolves.toEqual({ items: [item], source: "mock-api" });
   });
@@ -106,4 +110,12 @@ describe("gifts", () => {
       }),
     ).rejects.toThrow("Timed out");
   });
+});
+
+it("advances through the three selections and review", () => {
+  expect(nextGiftStep("recipient")).toBe("budget");
+  expect(nextGiftStep("budget")).toBe("occasion");
+  expect(nextGiftStep("occasion")).toBe("review");
+  expect(nextGiftStep("review")).toBe("results");
+  expect(previousGiftStep("review")).toBe("occasion");
 });

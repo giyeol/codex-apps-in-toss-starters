@@ -107,7 +107,7 @@ export function TestAdPanel() {
     }
   };
   return (
-    <footer className="course-footer">
+    <section aria-label="선택 실습: 테스트 광고" className="ad-course-footer">
       <details className="ad-demo">
         <summary>
           <span className="ad-summary-icon" aria-hidden="true">
@@ -145,6 +145,6 @@ export function TestAdPanel() {
         </section>
       </details>
       <p className="course-signature">작게 만들고, 실제 화면에서 확인해요.</p>
-    </footer>
+    </section>
   );
 }

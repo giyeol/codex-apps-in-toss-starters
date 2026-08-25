@@ -21,11 +21,20 @@ const items = [
     free: true,
   },
 ];
-describe("activities", () =>
-  it("filters, saves, and puts free activities first", () => {
+
+describe("activities", () => {
+  it("filters by category", () => {
     expect(filterActivities(items, "실내")).toEqual([items[0]]);
     expect(filterActivities(items, "전체")).toEqual(items);
+  });
+
+  it("toggles one saved id", () => {
     expect(toggleSaved([], "a")).toEqual(["a"]);
     expect(toggleSaved(["a"], "a")).toEqual([]);
+  });
+
+  it("puts free activities first without mutating input", () => {
     expect(freeFirst(items).map((item) => item.id)).toEqual(["b", "a"]);
-  }));
+    expect(items.map((item) => item.id)).toEqual(["a", "b"]);
+  });
+});
