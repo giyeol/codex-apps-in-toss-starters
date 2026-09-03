@@ -7,7 +7,7 @@
 ## 오늘 할 일
 
 1. [준비물](docs/PREPARE.md)을 끝나요. 컴퓨터용 ChatGPT, Plus, node(`v24.`로 시작), pnpm(`11.9.0`)이 필요해요.
-2. 오전에는 Codex로 웹페이지 초안을 만들어요. Codex는 컴퓨터용 ChatGPT 안의 코딩 도우미 화면이에요.
+2. 오전에는 컴퓨터용 ChatGPT에서 Codex로 웹페이지 초안을 만들어요.
 3. [연습용 앱 고르기](docs/CHOOSE_A_STARTER.md)에서 폴더 하나를 고르고, 그 폴더를 Codex에서 열어요. 할 일은 그 폴더의 `README.md`예요.
 4. 그 폴더에서 `pnpm install`을 실행해요. 앱을 돌리는 데 필요한 도구가 그 폴더에 받아져요.
 5. 오전에 만든 글을 `PROMPTS.md`의 안내대로 `src/content` 폴더에 넣어요. `src/platform` 폴더는 건드리지 않아요.
