@@ -64,7 +64,7 @@ test("generated projects are independent and complete", () => {
         "이 폴더",
         "SERVICE_BRIEF.md",
         "pnpm install",
-        "Granite",
+        "필요한 도구",
         "pnpm doctor",
         "pnpm setup",
         "pnpm dev",
