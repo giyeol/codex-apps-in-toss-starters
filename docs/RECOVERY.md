@@ -4,7 +4,7 @@
 
 | 체크포인트 | 확인할 증거 | 다음 행동 |
 | --- | --- | --- |
-| 1. 준비 완료 | Node 24, pnpm 11.9.0, Git, Codex 실행 | `pnpm install`로 이동 |
+| 1. 준비 완료 | Node 24, pnpm 11.9.0, Codex 실행 | `pnpm install`로 이동 |
 | 2. 설치 완료 | `pnpm doctor` 통과 | appName을 확인하고 `pnpm setup` 실행 |
 | 3. 기준본 완료 | `pnpm dev` 브라우저에서 핵심 기능 작동 | 첫 `pnpm build:qr` 실행 |
 | 4. 첫 QR 완료 | 기준본이 최신 QR에서 실행 | `src/content` 개인화 |

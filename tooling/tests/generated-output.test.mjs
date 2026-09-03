@@ -38,6 +38,7 @@ test("generated projects are independent and complete", () => {
       "service.config.json",
       "START_HERE.md",
       "README.md",
+      "AGENTS.md",
       "SERVICE_BRIEF.md",
       "PROMPTS.md",
       "QR_CHECKLIST.md",
@@ -53,30 +54,40 @@ test("generated projects are independent and complete", () => {
     const startHere = readFileSync(join(root, "START_HERE.md"), "utf8");
     assert.match(startHere, new RegExp(kit.displayName));
     assert.match(startHere, /starter|complete/);
+    assert.match(startHere, /README\.md/);
     const readme = readFileSync(join(root, "README.md"), "utf8");
+    const agents = readFileSync(join(root, "AGENTS.md"), "utf8");
     assert.match(readme, new RegExp(`^# ${kit.displayName}$`, "m"));
     assertInOrder(
       readme,
       [
+        "이 폴더",
         "SERVICE_BRIEF.md",
         "pnpm install",
+        "Granite",
         "pnpm doctor",
         "pnpm setup",
         "pnpm dev",
-        "첫 `.ait`",
         "PROMPTS.md",
         "pnpm check",
+        "첫 `.ait`",
         "두 번째 QR",
       ],
       `${root}/README.md learner flow`,
     );
     if (flavor.id === "complete")
       assert.match(startHere, /선택 확장|확장 기능/);
-    for (const doc of [readme, readFileSync(join(root, "PROMPTS.md"), "utf8")]) {
+    for (const doc of [
+      readme,
+      agents,
+      readFileSync(join(root, "PROMPTS.md"), "utf8"),
+    ]) {
       assert.doesNotMatch(doc, /src\/theme\.ts/);
       assert.match(doc, /src\/content/);
       assert.match(doc, /src\/platform/);
     }
+    assert.match(agents, /앱을 처음부터 다시 만들기/);
+    assert.match(agents, /pnpm build:qr/);
     for (const file of files(root)) {
       const relative = file.slice(root.length + 1);
       assert.equal(forbiddenFileReason(relative), null, `${root}/${relative}`);
