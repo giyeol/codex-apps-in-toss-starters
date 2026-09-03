@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1600" viewBox="0 0 2400 1600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#EFF6FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+      .title { font-size: 76px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-size: 32px; font-weight: 500; fill: #64748B; }
+      .section { font-size: 28px; font-weight: 700; letter-spacing: 2px; }
+      .row-title { font-size: 34px; font-weight: 700; fill: #0F172A; }
+      .body { font-size: 31px; font-weight: 500; fill: #334155; }
+      .receipt { font-size: 25px; font-weight: 600; fill: #475569; }
+      .status { font-size: 25px; font-weight: 700; fill: #047857; }
+      .footer-title { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .footer-body { font-size: 26px; font-weight: 500; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="2400" height="1600" fill="url(#bg)"/>
+  <circle cx="2260" cy="70" r="260" fill="#DBEAFE" opacity="0.55"/>
+  <circle cx="130" cy="1510" r="260" fill="#D1FAE5" opacity="0.50"/>
+
+  <text x="120" y="138" class="title">강의 자료 개선 요약</text>
+  <text x="120" y="194" class="subtitle">업체 전달 기준 반영 · 2026.08.28 · 로컬 전달본 기준</text>
+
+  <g transform="translate(120 238)">
+    <rect x="0" y="0" width="1010" height="70" rx="22" fill="#FFF1F2"/>
+    <circle cx="44" cy="35" r="10" fill="#E11D48"/>
+    <text x="72" y="45" class="section" fill="#BE123C">AS-IS · 확인된 부족점</text>
+
+    <rect x="1130" y="0" width="1030" height="70" rx="22" fill="#ECFDF5"/>
+    <circle cx="1174" cy="35" r="10" fill="#059669"/>
+    <text x="1202" y="45" class="section" fill="#047857">TO-BE · 개선 전달본</text>
+  </g>
+
+  <!-- Row 1 -->
+  <g transform="translate(120 334)" filter="url(#shadow)">
+    <rect width="2160" height="245" rx="30" fill="#FFFFFF"/>
+    <rect width="12" height="245" rx="6" fill="#3B82F6"/>
+    <circle cx="72" cy="66" r="28" fill="#DBEAFE"/>
+    <text x="72" y="77" text-anchor="middle" font-size="27" font-weight="700" fill="#1D4ED8">1</text>
+    <text x="120" y="78" class="row-title">PART 1 · PRD 제작 과정</text>
+
+    <text x="74" y="137" class="body">고화질 PRD PNG 2장만 준비</text>
+    <text x="74" y="181" class="body">제작 과정 영상은 없음</text>
+
+    <path d="M1048 121h80m-24-24 24 24-24 24" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="1188" y="137" class="body">실제 Figma 화면에서 항목이 순차 입력되는 흐름</text>
+    <text x="1188" y="181" class="body">완성 PRD 화면까지 자연스럽게 연결</text>
+    <rect x="1768" y="35" width="326" height="48" rx="24" fill="#ECFDF5"/>
+    <text x="1931" y="68" text-anchor="middle" class="status">완료 · 26.00초</text>
+    <text x="1188" y="222" class="receipt">1920×1080 · H.264 · Figma 기반 순차 입력 연출</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(120 603)" filter="url(#shadow)">
+    <rect width="2160" height="245" rx="30" fill="#FFFFFF"/>
+    <rect width="12" height="245" rx="6" fill="#8B5CF6"/>
+    <circle cx="72" cy="66" r="28" fill="#EDE9FE"/>
+    <text x="72" y="77" text-anchor="middle" font-size="27" font-weight="700" fill="#6D28D9">2</text>
+    <text x="120" y="78" class="row-title">PART 2·3 · PC 제작 화면</text>
+
+    <text x="74" y="137" class="body">3024×1898 전체 화면을 그대로 축소</text>
+    <text x="74" y="181" class="body">모바일에서 본문·커서 인지 어려움</text>
+
+    <path d="M1048 121h80m-24-24 24 24-24 24" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="1188" y="137" class="body">4:5 확대 구도와 부드러운 화면 이동</text>
+    <text x="1188" y="181" class="body">단계 라벨·큰 커서·구현/검증 결과 강조</text>
+    <rect x="1690" y="35" width="404" height="48" rx="24" fill="#ECFDF5"/>
+    <text x="1892" y="68" text-anchor="middle" class="status">완료 · 29.43 / 27.63초</text>
+    <text x="1188" y="222" class="receipt">각 1080×1350 · H.264 · 390px 축소본 검수</text>
+  </g>
+
+  <!-- Row 3 -->
+  <g transform="translate(120 872)" filter="url(#shadow)">
+    <rect width="2160" height="245" rx="30" fill="#FFFFFF"/>
+    <rect width="12" height="245" rx="6" fill="#F59E0B"/>
+    <circle cx="72" cy="66" r="28" fill="#FEF3C7"/>
+    <text x="72" y="77" text-anchor="middle" font-size="27" font-weight="700" fill="#B45309">3</text>
+    <text x="120" y="78" class="row-title">PART 5 · 토스에서 배포 앱 열기</text>
+
+    <text x="74" y="137" class="body">31.89초 · HEVC · 일반 녹화 파일명</text>
+    <text x="74" y="181" class="body">업체 상한 30초를 초과</text>
+
+    <path d="M1048 121h80m-24-24 24 24-24 24" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="1188" y="137" class="body">홈 → 검색 → 앱 선택 → 실제 진입 흐름 유지</text>
+    <text x="1188" y="181" class="body">전달 호환성이 높은 규격과 파일명 적용</text>
+    <rect x="1770" y="35" width="324" height="48" rx="24" fill="#ECFDF5"/>
+    <text x="1932" y="68" text-anchor="middle" class="status">완료 · 29.03초</text>
+    <text x="1188" y="222" class="receipt">1206×2622 · H.264 · 30fps · 세로</text>
+  </g>
+
+  <!-- Row 4 -->
+  <g transform="translate(120 1141)" filter="url(#shadow)">
+    <rect width="2160" height="245" rx="30" fill="#FFFFFF"/>
+    <rect width="12" height="245" rx="6" fill="#10B981"/>
+    <circle cx="72" cy="66" r="28" fill="#D1FAE5"/>
+    <text x="72" y="77" text-anchor="middle" font-size="27" font-weight="700" fill="#047857">4</text>
+    <text x="120" y="78" class="row-title">앱인토스 · 직전 월 앱별 매출 화면</text>
+
+    <text x="74" y="137" class="body">‘전체’ 중심 화면으로 앱 식별이 불명확</text>
+    <text x="74" y="181" class="body">직전 월 일자별 행이 한 화면에 부족</text>
+
+    <path d="M1048 121h80m-24-24 24 24-24 24" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="1188" y="137" class="body">매일 상식 쌓기 · 2026년 7월 명시</text>
+    <text x="1188" y="181" class="body">앱명 + 기간 + 월 합계 + 일자별 5개 행</text>
+    <rect x="1768" y="35" width="326" height="48" rx="24" fill="#ECFDF5"/>
+    <text x="1931" y="68" text-anchor="middle" class="status">완료 · 고화질 PNG</text>
+    <text x="1188" y="222" class="receipt">2582×1676 · 콘솔 읽기 전용 캡처</text>
+  </g>
+
+  <g transform="translate(120 1422)">
+    <rect width="2160" height="112" rx="26" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="62" cy="56" r="23" fill="#DBEAFE"/>
+    <path d="M53 56l7 7 13-16" fill="none" stroke="#2563EB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="106" y="48" class="footer-title">로컬 전달본 준비 완료</text>
+    <text x="106" y="82" class="footer-body">Notion 체크와 Google Drive 업로드·교체는 외부 반영 작업이므로 아직 실행하지 않았어요.</text>
+  </g>
+</svg>

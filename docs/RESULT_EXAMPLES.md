@@ -36,9 +36,9 @@
 
 | 예시 | 재생시간 | 녹화 흐름 | 파일 |
 | --- | ---: | --- | --- |
-| 주말 활동 모음 | 27.77초 | 활동 확인 → 상세 → 저장 → 저장 목록 | [01-weekend-activities-demo.mp4](../../recordings/final/01-weekend-activities-demo.mp4) |
-| 7일 습관 챌린지 | 27.43초 | 기분 선택 → 메모 → 완료 → 3일 연속 기록 | [02-habit-challenge-demo.mp4](../../recordings/final/02-habit-challenge-demo.mp4) |
-| 여행 스타일 테스트 | 32.68초 | 소개 → 6개 질문 → 결과 → 결과 문구 복사 | [03-travel-style-test-demo.mp4](../../recordings/final/03-travel-style-test-demo.mp4) |
-| 상황별 선물 찾기 | 33.00초 | 대상 → 예산 → 상황 → 조건 검토 → 추천 3개 | [04-gift-finder-demo.mp4](../../recordings/final/04-gift-finder-demo.mp4) |
+| 주말 활동 모음 | 23.08초 | 활동 확인 → 상세 → 저장 → 저장 목록 | [01-weekend-activities-demo.mp4](../../recordings/final/01-weekend-activities-demo.mp4) |
+| 7일 습관 챌린지 | 22.28초 | 기분 선택 → 메모 → 완료 → 3일 연속 기록 | [02-habit-challenge-demo.mp4](../../recordings/final/02-habit-challenge-demo.mp4) |
+| 여행 스타일 테스트 | 25.72초 | 소개 → 6개 질문 → 결과 → 결과 문구 복사 | [03-travel-style-test-demo.mp4](../../recordings/final/03-travel-style-test-demo.mp4) |
+| 상황별 선물 찾기 | 23.83초 | 대상 → 예산 → 상황 → 조건 검토 → 추천 3개 | [04-gift-finder-demo.mp4](../../recordings/final/04-gift-finder-demo.mp4) |
 
 네 파일은 `780×1688`, H.264, 60fps, 무음으로 인코딩했어요. 포인터는 매 클릭 직전에 실제 DOM 요소의 중심과 hit target이 일치하는지 확인해요. 이 영상은 로컬 브라우저 작동 예시이며 Google Drive 업로드, Apps in Toss 실기기 동작, 콘솔 등록, 검토 요청, 승인 또는 출시 증거가 아니에요.

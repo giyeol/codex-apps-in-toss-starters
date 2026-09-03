@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AIERS 강의 자료 액션 보드. 8월 26일 회의 합의와 3번 페이지 납품 항목을 기한·상태·의존 관계로 정리합니다."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23ff6000'/%3E%3C/svg%3E"
+    />
+    <title>AIERS 강의 자료 액션 보드</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --background: #f7f6f2;
+        --surface: #ffffff;
+        --surface-soft: #f2f4f7;
+        --ink: #172033;
+        --muted: #5d6677;
+        --line: #d9dde5;
+        --navy: #15233e;
+        --navy-soft: #eaf0fa;
+        --orange: #ff6000;
+        --orange-dark: #b74200;
+        --orange-soft: #fff1e8;
+        --empty: #9a3412;
+        --empty-soft: #fff4ed;
+        --wait: #92400e;
+        --wait-soft: #fff8e8;
+        --done: #166534;
+        --done-soft: #edf9f0;
+        --park: #475569;
+        --park-soft: #eef2f6;
+        --to-be: #075985;
+        --radius: 18px;
+        --shadow: 0 14px 36px rgba(23, 32, 51, 0.07);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--ink);
+        font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+      }
+      a { color: var(--to-be); font-weight: 750; text-underline-offset: 0.18em; }
+      a:focus-visible,
+      button:focus-visible,
+      .skip-link:focus-visible {
+        outline: 4px solid rgba(255, 96, 0, 0.38);
+        outline-offset: 4px;
+      }
+      h1, h2, h3, p { margin-top: 0; }
+      h1, h2, h3, strong { letter-spacing: -0.02em; }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 100;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: #fff;
+        color: var(--navy);
+        font-weight: 800;
+        transform: translateY(-150%);
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 64px 0 52px;
+        background: var(--navy);
+        color: #fff;
+      }
+      .hero::after {
+        position: absolute;
+        right: -90px;
+        bottom: -130px;
+        width: 360px;
+        height: 360px;
+        border: 64px solid rgba(255, 96, 0, 0.24);
+        border-radius: 50%;
+        content: "";
+      }
+      .eyebrow, .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.045em;
+      }
+      .eyebrow {
+        margin-bottom: 16px;
+        background: var(--orange);
+        color: #fff;
+      }
+      h1 {
+        max-width: 860px;
+        margin-bottom: 14px;
+        font-size: clamp(2.3rem, 6vw, 4.4rem);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+      }
+      .hero-copy {
+        max-width: 760px;
+        margin-bottom: 0;
+        color: #dce5f4;
+        font-size: clamp(1rem, 2.2vw, 1.18rem);
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-top: 24px;
+        color: #bec9dc;
+        font-size: 0.88rem;
+      }
+      .next-move {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin-top: 28px;
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: rgba(255, 96, 0, 0.16);
+        border: 1px solid rgba(255, 180, 120, 0.35);
+      }
+      .next-move strong { color: #ffb789; }
+      .next-move p { margin: 4px 0 0; color: #e8eef8; font-size: 0.95rem; }
+
+      main { padding: 34px 0 76px; }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .summary article {
+        min-height: 132px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-top: 5px solid var(--orange);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .summary article.wait { border-top-color: #d97706; }
+      .summary article.done { border-top-color: var(--done); }
+      .summary article.park { border-top-color: var(--park); }
+      .summary .metric {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--navy);
+        font-size: 1.7rem;
+        font-weight: 950;
+      }
+      .summary strong { display: block; margin-bottom: 4px; }
+      .summary p { margin-bottom: 0; color: var(--muted); font-size: 0.9rem; }
+
+      .section { margin-top: 54px; }
+      .section-heading {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+        margin-bottom: 20px;
+      }
+      .section-number {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 13px;
+        background: var(--orange);
+        color: #fff;
+        font-weight: 950;
+      }
+      h2 {
+        margin-bottom: 3px;
+        color: var(--navy);
+        font-size: clamp(1.5rem, 3vw, 2.05rem);
+        line-height: 1.28;
+      }
+      .section-heading p { margin-bottom: 0; color: var(--muted); }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .timeline article {
+        position: relative;
+        padding: 18px 18px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+      .timeline article.urgent {
+        border-color: #f0b59a;
+        background: var(--orange-soft);
+      }
+      .timeline time {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--orange-dark);
+        font-size: 0.82rem;
+        font-weight: 900;
+      }
+      .timeline strong { display: block; margin-bottom: 4px; color: var(--navy); }
+      .timeline p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+      .filters button {
+        min-height: 44px;
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--navy);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .filters button[aria-pressed="true"] {
+        border-color: var(--navy);
+        background: var(--navy);
+        color: #fff;
+      }
+
+      .deliver-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .deliver-card {
+        display: flex;
+        flex-direction: column;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .deliver-card header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .id-badge {
+        display: inline-grid;
+        min-width: 40px;
+        min-height: 40px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--navy);
+        color: #fff;
+        font-weight: 950;
+      }
+      .deliver-card h3 {
+        flex: 1;
+        margin: 0;
+        color: var(--navy);
+        font-size: 1.18rem;
+      }
+      .deliver-card p { color: var(--muted); font-size: 0.92rem; }
+      .deliver-card ul {
+        margin: 0 0 14px;
+        padding-left: 1.1em;
+        color: var(--ink);
+        font-size: 0.92rem;
+      }
+      .deliver-meta {
+        display: grid;
+        gap: 6px;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        font-size: 0.86rem;
+      }
+      .deliver-meta span { color: var(--muted); }
+      .deliver-meta strong { color: var(--navy); }
+
+      .pill.empty { background: var(--empty-soft); color: var(--empty); }
+      .pill.wait { background: var(--wait-soft); color: var(--wait); }
+      .pill.done { background: var(--done-soft); color: var(--done); }
+      .pill.park { background: var(--park-soft); color: var(--park); }
+      .pill.me { background: var(--navy-soft); color: var(--navy); }
+      .pill.org { background: var(--orange-soft); color: var(--orange-dark); }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .item-card {
+        padding: 18px 18px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+      .item-card header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .item-card h3 {
+        margin: 0;
+        flex: 1 1 140px;
+        color: var(--navy);
+        font-size: 1.02rem;
+      }
+      .item-card p { margin-bottom: 0; color: var(--muted); font-size: 0.9rem; }
+      .item-card .done-when {
+        margin-top: 10px;
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+
+      .table-shell {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .table-scroll { overflow-x: auto; overscroll-behavior-inline: contain; }
+      table { width: 100%; border-collapse: collapse; }
+      caption {
+        padding: 16px 18px;
+        background: #f8f9fb;
+        color: var(--muted);
+        font-size: 0.88rem;
+        text-align: left;
+      }
+      th, td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--navy);
+        color: #fff;
+        font-size: 0.82rem;
+      }
+      tbody tr:nth-child(even) { background: #fafbfc; }
+      tbody tr:last-child td { border-bottom: 0; }
+      .id-cell { font-weight: 900; color: var(--navy); white-space: nowrap; }
+
+      .notice {
+        margin-top: 14px;
+        padding: 18px 20px;
+        border-left: 5px solid var(--orange);
+        border-radius: 0 14px 14px 0;
+        background: var(--navy);
+        color: #fff;
+      }
+      .notice p { margin: 0; color: #e2e9f4; }
+      .notice strong { color: #ffb789; }
+
+      .dep {
+        display: grid;
+        gap: 10px;
+      }
+      .dep-row {
+        display: grid;
+        grid-template-columns: 160px minmax(0, 1fr) 140px;
+        gap: 10px;
+        align-items: center;
+      }
+      .dep-src, .dep-dst, .dep-mid {
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+      .dep-src { background: var(--navy-soft); color: var(--navy); }
+      .dep-mid {
+        background: #fff;
+        border: 1px dashed var(--line);
+        color: var(--muted);
+        font-weight: 650;
+      }
+      .dep-dst { background: var(--orange-soft); color: var(--orange-dark); }
+
+      .next-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .next-list li {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        gap: 12px;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+      .next-list b {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--orange);
+        color: #fff;
+      }
+      .next-list strong { display: block; color: var(--navy); }
+      .next-list span { color: var(--muted); font-size: 0.9rem; }
+
+      footer {
+        padding: 28px 0;
+        background: #e8ebf1;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .is-hidden { display: none !important; }
+
+      @media (max-width: 960px) {
+        .summary, .timeline, .deliver-grid { grid-template-columns: 1fr 1fr; }
+        .dep-row { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 700px) {
+        .container { width: calc(100% - 28px); }
+        .summary, .timeline, .deliver-grid, .card-grid { grid-template-columns: 1fr; }
+        .table-shell { overflow: visible; border: 0; background: transparent; box-shadow: none; }
+        table, thead, tbody, tr, th, td { display: block; }
+        thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+        tbody { display: grid; gap: 10px; }
+        tbody tr {
+          overflow: hidden;
+          border: 1px solid var(--line);
+          border-radius: 14px;
+          background: var(--surface);
+        }
+        td { border-bottom: 1px solid var(--line); }
+        td::before {
+          display: block;
+          margin-bottom: 2px;
+          color: var(--muted);
+          content: attr(data-label);
+          font-size: 0.72rem;
+          font-weight: 850;
+        }
+        td:last-child { border-bottom: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+      @media print {
+        .filters, .skip-link { display: none; }
+        .hero { background: #15233e; print-color-adjust: exact; }
+        .item-card, .deliver-card { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <header class="hero">
+      <div class="container">
+        <span class="eyebrow">AIERS ACTION BOARD</span>
+        <h1>강의 자료<br />액션 보드</h1>
+        <p class="hero-copy">
+          8월 26일 저녁 합의는 HTML-first입니다. 멋사 납품은 구글폼·사전 준비·PPT 세 가지이고,
+          당일 완료선은 동작하는 미니앱과 최신 QR입니다.
+        </p>
+        <div class="hero-meta" aria-label="기준 정보">
+          <span>기준일 2026-09-01</span>
+          <span>강의 2026-09-19 10:00–17:00</span>
+          <span>동대문 성우빌딩 · 30석</span>
+        </div>
+        <div class="next-move">
+          <strong>바로 다음</strong>
+          <p>A1 구글폼 질문 확정본을 3번 페이지에 적고 매니저에게 고지합니다. 기한은 내일(9/2) 전후입니다.</p>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container">
+        <section class="summary" aria-label="상태 요약">
+          <article>
+            <span class="metric">3</span>
+            <strong>빈 칸 납품</strong>
+            <p>구글폼, 사전 준비, PPT. 3번 페이지가 아직 비어 있습니다.</p>
+          </article>
+          <article class="wait">
+            <span class="metric">9/2</span>
+            <strong>가장 임박</strong>
+            <p>얼리버드 오픈(8/28) 기준 구글폼 3영업일입니다.</p>
+          </article>
+          <article class="wait">
+            <span class="metric">C</span>
+            <strong>멋사·업체 대기</strong>
+            <p>참고 10장, 프로필 규격, 수강료, public 전환은 강사가 확정할 수 없습니다.</p>
+          </article>
+          <article class="park">
+            <span class="metric">보류</span>
+            <strong>전원 필수 아님</strong>
+            <p>사업자·실광고 ID·Gemini API는 선택 부록입니다.</p>
+          </article>
+        </section>
+
+        <section class="section" aria-labelledby="section-timeline">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">1</span>
+            <div>
+              <h2 id="section-timeline">기한 한눈에</h2>
+              <p>납품 기한만 먼저 고정하고, 운영 리허설은 강의 전까지 별도로 둡니다.</p>
+            </div>
+          </div>
+          <div class="timeline">
+            <article class="urgent">
+              <time datetime="2026-09-02">9월 2일 전후</time>
+              <strong>A1 구글폼</strong>
+              <p>질문 목록 작성 후 매니저 고지. 폼 생성은 멋사.</p>
+            </article>
+            <article>
+              <time datetime="2026-09-04">9월 4일 전후</time>
+              <strong>A2 사전 준비</strong>
+              <p>macOS/Windows 분리 Notion. 오픈채팅 배포는 모집 마감 후.</p>
+            </article>
+            <article>
+              <time datetime="2026-09-12">9월 12일</time>
+              <strong>A3 PPT + 교재</strong>
+              <p>강의 7일 전 전체 완료. PDF를 3번에 임베드.</p>
+            </article>
+            <article>
+              <time datetime="2026-09-19">9월 19일</time>
+              <strong>1기 강의</strong>
+              <p>HTML-first 6시간. QR 실기기 QA와 리허설은 그 전.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-a">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">2</span>
+            <div>
+              <h2 id="section-a">납품 3종 · 3번 페이지</h2>
+              <p>
+                <a href="https://app.notion.com/p/3c6a2f9619c880d9bb09faee7b5289f8">강의 자료 제작 페이지</a>가
+                실제 제출 창구입니다.
+              </p>
+            </div>
+          </div>
+          <div class="filters" role="group" aria-label="항목 필터">
+            <button type="button" data-filter="all" aria-pressed="true">전체</button>
+            <button type="button" data-filter="me" aria-pressed="false">배기열</button>
+            <button type="button" data-filter="org" aria-pressed="false">멋사·업체</button>
+            <button type="button" data-filter="empty" aria-pressed="false">빈 칸만</button>
+            <button type="button" data-filter="soon" aria-pressed="false">9/12까지</button>
+          </div>
+
+          <div class="deliver-grid">
+            <article class="deliver-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="id-badge">A1</span>
+                <h3>구글폼 질문</h3>
+                <span class="pill empty">빈 칸</span>
+              </header>
+              <p>준비 상태만 받습니다. 비밀번호, 토큰, 결제 정보는 받지 않습니다.</p>
+              <ul>
+                <li>OS·관리자 권한·Codex·Node/pnpm/Git</li>
+                <li>콘솔·워크스페이스·토스 앱 로그인</li>
+                <li>사업자는 필수 아님, 수익화 분기용</li>
+                <li>아이디어 한 줄·오류·접근성(선택)</li>
+              </ul>
+              <div class="deliver-meta">
+                <span>기한 <strong>9/2 전후</strong></span>
+                <span>완료 <strong>3번에 질문 적고 매니저 고지</strong></span>
+              </div>
+            </article>
+            <article class="deliver-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="id-badge">A2</span>
+                <h3>사전 준비 가이드</h3>
+                <span class="pill empty">빈 페이지</span>
+              </header>
+              <p>
+                하위 페이지가 비어 있습니다. 로컬
+                <code>PREPARE.md</code>를 HTML-first 동선으로 고쳐 옮깁니다.
+              </p>
+              <ul>
+                <li>Node 24.8–24.x, pnpm 11.9, Git, Chrome, Codex</li>
+                <li>콘솔 가입은 사전, appName은 당일</li>
+                <li>에뮬레이터·Sandbox·실광고 ID 불필요</li>
+                <li>Plus $20 최소, 한도 대비는 선택</li>
+              </ul>
+              <div class="deliver-meta">
+                <span>기한 <strong>9/4 전후</strong></span>
+                <span>완료 <strong>작성 후 매니저 고지, 배포는 멋사</strong></span>
+              </div>
+            </article>
+            <article class="deliver-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="id-badge">A3</span>
+                <h3>발표 PPT</h3>
+                <span class="pill empty">임베드 없음</span>
+              </header>
+              <p>흰 배경, 포인트 <code>#FF6000</code>, 큰 글자, 캡처 중심. PDF로 올려 임베드합니다.</p>
+              <ul>
+                <li>오프닝: 앱 QR·성과·로드맵·거수</li>
+                <li>PART1 수익화 유형, PART2 HTML 워크플로</li>
+                <li>콘솔 칸이 앱 어디에 뜨는지</li>
+                <li>검토 요청 ≠ 출시하기</li>
+              </ul>
+              <div class="deliver-meta">
+                <span>기한 <strong>9/12</strong></span>
+                <span>완료 <strong>PDF 임베드 후 매니저 고지</strong></span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-b">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">3</span>
+            <div>
+              <h2 id="section-b">자료를 받치는 준비</h2>
+              <p>PPT와 교재에 들어가는 캡처·시연·문장입니다. 납품과 같은 주기에 굴립니다.</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B1</span>
+                <h3>강의용 Codex 환경</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>데모에서 Superpowers 등 개인 스킬이 끼었습니다. 수강생과 같은 출발선으로 시연이 재현돼야 합니다.</p>
+              <p class="done-when">완료: 스킬 제거 환경에서 HTML→미니앱 시연이 한 번 끝남.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B2</span>
+                <h3>따라 할 프롬프트</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>스타터 <code>PROMPTS.md</code>는 있습니다. HTML 목업용 “왜 이렇게 쓰는지” 3–6개가 없습니다.</p>
+              <p class="done-when">완료: PART2 슬라이드와 교재에 같은 예시가 실림.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B3</span>
+                <h3>PART3 단계 교재</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>오후 2시간은 순회입니다. “앞에서 놓쳐도 이 페이지면 됨”이 있어야 질문이 줄습니다.</p>
+              <p class="done-when">완료: 기획→HTML→이식→수정→콘솔이 한 Notion에 있음.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B4</span>
+                <h3>콘솔 복붙 템플릿</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>이름·부제·상세·카테고리·키워드를 AI가 한 번에. 콘솔 입력은 사람이 합니다.</p>
+              <p class="done-when">완료: Notion 템플릿 또는 스킬 MD가 교재에 연결됨.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B5</span>
+                <h3>콘솔 ↔ 앱 스크린샷</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>카테고리·키워드·설명이 앱 어디에 뜨는지. PPT 핵심 시각 자료입니다.</p>
+              <p class="done-when">완료: 칸마다 화면 한 장이 슬라이드에 들어감.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B6</span>
+                <h3>수익화 유형 설명</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>모기잡기처럼 광고→보상→포인트. 당일 입금을 약속하지 않습니다.</p>
+              <p class="done-when">완료: PART1에서 유형을 고를 수 있는 한 장.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header>
+                <span class="pill wait">B7</span>
+                <h3>수익화 세팅 자료</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>8/27에 정산·수익 마스킹 캡처는 있습니다. 강의용 Notion 구성은 아직입니다. 전원 실습이 아닙니다.</p>
+              <p class="done-when">완료: 사업자 있는 사람만 보는 마스킹 페이지.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="soon">
+              <header>
+                <span class="pill wait">B8</span>
+                <h3>오프닝 QR·성과</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>출시 미니앱 캡처·영상은 있습니다. 오프닝에서 찍고 쓰게 하는 큐시트가 없습니다. 매출은 공개 가능한 것만.</p>
+              <p class="done-when">완료: 슬라이드에 QR과 공개 가능 지표가 붙음.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="later">
+              <header>
+                <span class="pill empty">B9</span>
+                <h3>UX 한 줄 가이드</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>3초 규칙, 40–50대 시점, 코치마크. 순회 공백 시간에 말합니다. TDS 키트 리디자인과는 별 트랙입니다.</p>
+              <p class="done-when">완료: 교재에 짧은 체크 3–4개.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="soon">
+              <header>
+                <span class="pill wait">B10</span>
+                <h3>HTML 시연 리허설</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>과정 영상은 있습니다. PART2 90분이 중간본으로 복구되는지는 아직 재확인하지 않았습니다.</p>
+              <p class="done-when">완료: 스킬 제거 환경에서 한 번 끝까지.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="empty" data-when="soon">
+              <header>
+                <span class="pill empty">B11</span>
+                <h3>문서 동선 정합</h3>
+                <span class="pill me">배기열</span>
+              </header>
+              <p>2번 얼리버드는 HTML-first입니다. 1번 커리큘럼, <code>LEARNER_PATH</code>, 런북, 12장 슬라이드는 구버전입니다.</p>
+              <p class="done-when">완료: PPT와 1번·저장소 안내가 같은 하루를 가리킴.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-c">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">4</span>
+            <div>
+              <h2 id="section-c">멋사·업체가 해야 하는 것</h2>
+              <p>강사 액션과 섞지 않습니다. 로빈 스크린샷은 녹음에서 확인되지 않아 넣지 않았습니다.</p>
+            </div>
+          </div>
+          <div class="table-shell">
+            <div class="table-scroll" tabindex="0">
+              <table>
+                <caption>외부 의존. 강의 자료 초안은 이 답이 없어도 A1부터 시작할 수 있습니다.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">항목</th>
+                    <th scope="col">담당</th>
+                    <th scope="col">상태</th>
+                    <th scope="col">강사 쪽 영향</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-owner="org" data-status="wait" data-when="soon">
+                    <td class="id-cell" data-label="ID">C1</td>
+                    <td data-label="항목">참고 PPT 10장</td>
+                    <td data-label="담당">코디네이터</td>
+                    <td data-label="상태"><span class="pill wait">미확인</span></td>
+                    <td data-label="강사 쪽 영향">없어도 A3는 진행. 있으면 톤만 맞춤.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="soon">
+                    <td class="id-cell" data-label="ID">C2</td>
+                    <td data-label="항목">구글폼 생성·오픈채팅</td>
+                    <td data-label="담당">멋사</td>
+                    <td data-label="상태"><span class="pill wait">A1 대기</span></td>
+                    <td data-label="강사 쪽 영향">질문은 강사, 폼 제작은 멋사.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="later">
+                    <td class="id-cell" data-label="ID">C3</td>
+                    <td data-label="항목">사전 준비 오픈채팅 배포</td>
+                    <td data-label="담당">멋사</td>
+                    <td data-label="상태"><span class="pill wait">모집 마감 후</span></td>
+                    <td data-label="강사 쪽 영향">A2 작성만 하면 됨.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="later">
+                    <td class="id-cell" data-label="ID">C4</td>
+                    <td data-label="항목">강사 프로필 이미지 규격</td>
+                    <td data-label="담당">업체</td>
+                    <td data-label="상태"><span class="pill wait">STATUS 대기</span></td>
+                    <td data-label="강사 쪽 영향">추측 생성 금지. 2번 페이지 콜아웃 유지.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="later">
+                    <td class="id-cell" data-label="ID">C5</td>
+                    <td data-label="항목">수강료 숫자</td>
+                    <td data-label="담당">업체</td>
+                    <td data-label="상태"><span class="pill wait">예시만</span></td>
+                    <td data-label="강사 쪽 영향">PPT·가이드에 가격을 쓰지 않음.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="later">
+                    <td class="id-cell" data-label="ID">C7</td>
+                    <td data-label="항목">GitHub public 전환 서면</td>
+                    <td data-label="담당">업체</td>
+                    <td data-label="상태"><span class="pill wait">PENDING</span></td>
+                    <td data-label="강사 쪽 영향">당일은 캠프파이어 링크로 우회 가능.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="later">
+                    <td class="id-cell" data-label="ID">C8</td>
+                    <td data-label="항목">캠프파이어 당일 채널</td>
+                    <td data-label="담당">멋사</td>
+                    <td data-label="상태"><span class="pill wait">9/19</span></td>
+                    <td data-label="강사 쪽 영향">링크·채팅·녹화. 데모에서 사용함.</td>
+                  </tr>
+                  <tr data-owner="org" data-status="wait" data-when="soon">
+                    <td class="id-cell" data-label="ID">C9</td>
+                    <td data-label="항목">폼 개인정보 안내</td>
+                    <td data-label="담당">멋사</td>
+                    <td data-label="상태"><span class="pill wait">미수신</span></td>
+                    <td data-label="강사 쪽 영향">목적·열람·보관을 A1 안내에 넣어야 함.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-d">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">5</span>
+            <div>
+              <h2 id="section-d">강의 직전 운영</h2>
+              <p>납품과 별개입니다. HTML-first로 한 번 더 리허설해야 합니다.</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">D1</span><h3>QR 실기기 QA</h3></header>
+              <p>STATUS 대기. 로컬 빌드 성공으로 추정하지 않습니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">D2</span><h3>콘솔·캠프파이어 리허설</h3></header>
+              <p>8/26은 스타터 데모였습니다. HTML 이식 경로로 재리허설이 필요합니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">D3</span><h3>Codex 가격·한도 재확인</h3></header>
+              <p>슬라이드에 금액을 박기 직전 공식 화면을 다시 봅니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">D4</span><h3>검토 소요 공식 문서</h3></header>
+              <p>데모 발언(수분 vs 1주)과 공식(최대 3영업일)을 섞어 말하지 않습니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">D5</span><h3>결과 공유 방식</h3></header>
+              <p>출시 전 앱은 남에게 안 열립니다. QR·캠프파이어·프라이빗 링크를 마무리 전에 정합니다.</p>
+            </article>
+            <article class="item-card" data-owner="org" data-status="park" data-when="later">
+              <header><span class="pill park">D6</span><h3>투표·추첨</h3></header>
+              <p>스타벅스 등은 선택입니다. 저녁 회의에서 안 해도 된다고 했습니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-done">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">6</span>
+            <div>
+              <h2 id="section-done">다시 만들지 말 것</h2>
+              <p>이미 있는 자산입니다. PPT는 구버전 12장을 갈아타면 됩니다.</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="item-card" data-owner="me" data-status="done" data-when="later">
+              <header><span class="pill done">완료</span><h3>2번 타임테이블</h3></header>
+              <p>저녁 “목요일까지”는 8/27 얼리버드에 반영됐습니다. 1번·저장소는 아직입니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="done" data-when="later">
+              <header><span class="pill done">완료</span><h3>스타터·결과 영상</h3></header>
+              <p>4유형 이미지·20–30초 데모, 출시 미니앱 캡처, PART2–5 과정 영상.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="done" data-when="later">
+              <header><span class="pill done">완료</span><h3>마스킹 정산 캡처</h3></header>
+              <p>8/27 할 일에 정산·앱별 수익 캡처가 체크되어 있습니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="wait" data-when="later">
+              <header><span class="pill wait">별 트랙</span><h3>PART1 PRD 영상</h3></header>
+              <p>8/27 할 일에서만 미체크. A1–A3 납품과 분리합니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-park">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">7</span>
+            <div>
+              <h2 id="section-park">보류 · 축소</h2>
+              <p>자동 요약이 넓혀 놓은 항목입니다. 전원 필수로 올리면 환불 보장과 FAQ가 깨집니다.</p>
+            </div>
+          </div>
+          <div class="notice">
+            <p>
+              <strong>당일 약속:</strong> 동작하는 미니앱 + 최신 QR + 테스트 광고 이해.
+              사업자·실광고 ID·당일 출시·당일 수익은 공통선이 아닙니다.
+            </p>
+          </div>
+          <div class="card-grid" style="margin-top: 14px">
+            <article class="item-card" data-owner="me" data-status="park" data-when="later">
+              <header><span class="pill park">보류</span><h3>사업자·광고 ID 전원 사전</h3></header>
+              <p>A2에 “있으면 당일 세팅 가능”만 적습니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="park" data-when="later">
+              <header><span class="pill park">선택</span><h3>Gemini API 가이드</h3></header>
+              <p>PART3 빠른 사람용 부록. 공통선이 아닙니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="park" data-when="later">
+              <header><span class="pill park">당일 밖</span><h3>지도·사주·수집 서버</h3></header>
+              <p>데모에서 막힌 경로입니다. 교재에 “나중에”로 둡니다.</p>
+            </article>
+            <article class="item-card" data-owner="me" data-status="park" data-when="later">
+              <header><span class="pill park">오전 축 아님</span><h3>스타터 4유형 선택</h3></header>
+              <p>복구·이식 보조. 오전의 주인공은 HTML 목업입니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-dep">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">8</span>
+            <div>
+              <h2 id="section-dep">의존 관계</h2>
+              <p>왼쪽이 재료, 오른쪽이 납품입니다. A1은 다른 캡처 없이 바로 쓸 수 있습니다.</p>
+            </div>
+          </div>
+          <div class="dep">
+            <div class="dep-row">
+              <div class="dep-src">회신 초안 질문</div>
+              <div class="dep-mid">질문 확정 → 3번 페이지</div>
+              <div class="dep-dst">A1 구글폼 · 9/2</div>
+            </div>
+            <div class="dep-row">
+              <div class="dep-src">PREPARE.md + B11 동선</div>
+              <div class="dep-mid">HTML-first로 개정</div>
+              <div class="dep-dst">A2 사전 준비 · 9/4</div>
+            </div>
+            <div class="dep-row">
+              <div class="dep-src">B5·B6·B8 캡처</div>
+              <div class="dep-mid">큰 헤드 + 화면 한 장</div>
+              <div class="dep-dst">A3 PPT · 9/12</div>
+            </div>
+            <div class="dep-row">
+              <div class="dep-src">B2 프롬프트 + B3 교재</div>
+              <div class="dep-mid">같은 하루, 같은 문장</div>
+              <div class="dep-dst">PART2 시연 · PART3 순회</div>
+            </div>
+            <div class="dep-row">
+              <div class="dep-src">B1 스킬 제거</div>
+              <div class="dep-mid">HTML 이식 리허설</div>
+              <div class="dep-dst">D2 당일 운영</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="section-next">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">9</span>
+            <div>
+              <h2 id="section-next">바로 이을 작업 단위</h2>
+              <p>한 번에 하나만 닫습니다. 다음 단위는 A1입니다.</p>
+            </div>
+          </div>
+          <ol class="next-list">
+            <li>
+              <b>1</b>
+              <div>
+                <strong>A1 구글폼 질문 확정본</strong>
+                <span>3번 페이지에 적고 매니저 고지. 오늘–내일.</span>
+              </div>
+            </li>
+            <li>
+              <b>2</b>
+              <div>
+                <strong>A2 사전 준비 본문</strong>
+                <span>HTML-first, 사업자 비필수, macOS/Windows 분리.</span>
+              </div>
+            </li>
+            <li>
+              <b>3</b>
+              <div>
+                <strong>A3 슬라이드 목차 + 캡처 목록</strong>
+                <span>B5·B6·B8을 모은 뒤 9/12 PDF.</span>
+              </div>
+            </li>
+            <li>
+              <b>4</b>
+              <div>
+                <strong>B3 PART3 교재 목차</strong>
+                <span>슬라이드와 같은 하루. 순회용 한 페이지.</span>
+              </div>
+            </li>
+            <li>
+              <b>5</b>
+              <div>
+                <strong>B11 1번·런북 정합</strong>
+                <span>멋사 납품은 아니지만 PPT 전에 하루 뼈대를 맞춥니다.</span>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        AIERS 강의 자료 액션 보드 · 2026-09-01 정리 · 출처는 8/26 데모·저녁 회의 전사와 3번 페이지 계약 ·
+        자동 요약의 전원 필수 항목은 보류로 표시했습니다.
+      </div>
+    </footer>
+    <script>
+      const buttons = document.querySelectorAll(".filters button");
+      const items = document.querySelectorAll("[data-owner]");
+      const match = {
+        all: () => true,
+        me: (el) => el.dataset.owner === "me",
+        org: (el) => el.dataset.owner === "org",
+        empty: (el) => el.dataset.status === "empty",
+        soon: (el) => el.dataset.when === "soon",
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const filter = button.dataset.filter;
+          buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+          items.forEach((el) => {
+            el.classList.toggle("is-hidden", !match[filter](el));
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
