@@ -23,3 +23,12 @@ GoogleService-Info.plist
 *.pfx
 /docs/superpowers/
 tooling/deck/out/
+
+# 발표 자료와 콘솔·라이브 캡처는 공개 저장소에 넣지 않아요.
+docs/*.pptx
+docs/*.pdf
+docs/aiers-lecture-deck.js
+docs/assets/console/
+docs/assets/live/
+tooling/deck/
+.playwright-mcp/
