@@ -9,7 +9,6 @@ dist/
 .generated-stage/
 coverage/
 .wrangler/
-mock-api/health-receipt.json
 *.pem
 *.key
 *.p12

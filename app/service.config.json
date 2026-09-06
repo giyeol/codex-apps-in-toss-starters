@@ -1,0 +1,8 @@
+{
+  "appName": "course-gift-draw",
+  "displayName": "선물 뽑기",
+  "tagline": "상자를 열면 금액이 쌓여요",
+  "featureName": "giftDraw",
+  "primaryColor": "#FF6000",
+  "configuredForQr": false
+}

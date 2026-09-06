@@ -3,7 +3,7 @@
 수업에서 Codex에 붙여 넣는 글은 두 곳에 있어요. 이 문서는 그 위치와 공통 규칙만 적어요.
 
 - 오전 공통 HTML: [`common-demo/PROMPT.md`](../common-demo/PROMPT.md). 다 같이 「선물 뽑기」 화면을 만들 때 써요.
-- 오후 자유 주제: [`starter-kits/03-travel-style-test/PROMPTS.md`](../starter-kits/03-travel-style-test/PROMPTS.md). 내 HTML(`REFERENCE.html`)의 화면을 앱 화면(`src/features/active`)으로 옮길 때 써요.
+- 오후 자유 주제: [`app/PROMPTS.md`](../app/PROMPTS.md). 내 HTML(`REFERENCE.html`)의 화면을 앱 화면(`src/features/active`)으로 옮길 때 써요.
 
 오후에 내 주제의 HTML을 새로 만들 때는 오전과 같은 순서예요. 누구를 위한 화면인가 → 그 사람이 무엇을 하는가 → Codex에 그대로 말하기 → 브라우저에서 보기. 오전 프롬프트의 주제 부분만 내 주제로 바꿔 써요.
 

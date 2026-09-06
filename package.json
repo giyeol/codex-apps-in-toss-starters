@@ -8,9 +8,8 @@
   },
   "scripts": {
     "sync:tossface": "node tooling/scripts/sync-tossface-assets.mjs",
-    "generate": "node tooling/scripts/generate-kits.mjs",
-    "generate:check": "node tooling/scripts/generate-kits.mjs --check",
-    "capture:examples": "node tooling/scripts/capture-result-examples.mjs",
+    "generate": "node tooling/scripts/generate-app.mjs",
+    "generate:check": "node tooling/scripts/generate-app.mjs --check",
     "public:safety": "node tooling/scripts/public-safety.mjs",
     "verify:projects": "node tooling/scripts/verify-projects.mjs",
     "test:tooling": "node --test tooling/tests/*.test.mjs"

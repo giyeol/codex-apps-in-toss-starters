@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { targetMatrix } from "../kits.mjs";
+import { projects } from "../project.mjs";
 import { assertPublicSafe } from "./lib/public-safety.mjs";
 
 function run(project, args) {
@@ -10,8 +10,8 @@ function run(project, args) {
     throw new Error(`${project} failed: pnpm ${args.join(" ")}`);
 }
 
-for (const { kit, flavor } of targetMatrix()) {
-  const project = join(flavor.outputDirectory, kit.id);
+for (const { outputDirectory } of projects) {
+  const project = outputDirectory;
   for (const artifact of readdirSync(project).filter((name) =>
     name.endsWith(".ait"),
   ))

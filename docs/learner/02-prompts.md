@@ -15,7 +15,7 @@
 
 ## 오후 · 공통 폴더로 옮기기
 
-`starter-kits/03-travel-style-test/PROMPTS.md`의 글을 그대로 써요. `REFERENCE.html`을 먼저 복사해 두고요.
+`app/PROMPTS.md`의 글을 그대로 써요. 그 폴더의 처음 화면은 오전에 만든 선물 뽑기예요. `REFERENCE.html`을 먼저 복사해 두고요.
 
 ## 오류가 났을 때
 

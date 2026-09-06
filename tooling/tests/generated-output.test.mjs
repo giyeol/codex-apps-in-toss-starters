@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
-import { targetMatrix } from "../kits.mjs";
+import { projects } from "../project.mjs";
 import { forbiddenFileReason } from "../scripts/lib/public-safety.mjs";
 import { unresolvedCourseTokens } from "../scripts/lib/template.mjs";
 
@@ -27,9 +27,9 @@ function assertInOrder(text, fragments, label) {
   }
 }
 
-test("generated projects are independent and complete", () => {
-  for (const { kit, flavor } of targetMatrix()) {
-    const root = join(flavor.outputDirectory, kit.id);
+test("the generated project is independent and complete", () => {
+  for (const project of projects) {
+    const root = project.outputDirectory;
     for (const file of [
       "package.json",
       "pnpm-lock.yaml",
@@ -42,22 +42,29 @@ test("generated projects are independent and complete", () => {
       "SERVICE_BRIEF.md",
       "PROMPTS.md",
       "QR_CHECKLIST.md",
+      "src/features/active/index.tsx",
+      "src/features/active/model.ts",
+      "src/content/gift.ts",
     ])
       assert.ok(existsSync(join(root, file)), root + "/" + file);
     const pkg = readFileSync(join(root, "package.json"), "utf8");
     assert.match(pkg, /"build:qr"/);
+    assert.match(pkg, new RegExp(`"name": "${project.packageName}"`));
     assert.ok(!pkg.includes("workspace:") && !pkg.includes("file:../../"));
     const workspace = readFileSync(join(root, "pnpm-workspace.yaml"), "utf8");
     assert.ok(!workspace.includes("packages:"));
     assert.match(workspace, /esbuild: true/);
     assert.match(workspace, /protobufjs: true/);
+    const service = JSON.parse(readFileSync(join(root, "service.config.json"), "utf8"));
+    assert.equal(service.appName, project.demoAppName);
+    assert.equal(service.displayName, project.displayName);
+    assert.equal(service.configuredForQr, false);
     const startHere = readFileSync(join(root, "START_HERE.md"), "utf8");
-    assert.match(startHere, new RegExp(kit.displayName));
-    assert.match(startHere, /starter|complete/);
+    assert.match(startHere, new RegExp(project.displayName));
     assert.match(startHere, /README\.md/);
     const readme = readFileSync(join(root, "README.md"), "utf8");
     const agents = readFileSync(join(root, "AGENTS.md"), "utf8");
-    assert.match(readme, new RegExp(`^# ${kit.displayName}$`, "m"));
+    assert.match(readme, new RegExp(`^# ${project.displayName}`, "m"));
     assertInOrder(
       readme,
       [
@@ -75,14 +82,13 @@ test("generated projects are independent and complete", () => {
       ],
       `${root}/README.md learner flow`,
     );
-    if (flavor.id === "complete")
-      assert.match(startHere, /선택 확장|확장 기능/);
     for (const doc of [
       readme,
       agents,
       readFileSync(join(root, "PROMPTS.md"), "utf8"),
     ]) {
       assert.doesNotMatch(doc, /src\/theme\.ts/);
+      assert.doesNotMatch(doc, /starter-kits|complete-examples/);
       assert.match(doc, /src\/content/);
       assert.match(doc, /src\/platform/);
     }

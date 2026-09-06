@@ -48,8 +48,7 @@ TDS와 중복되거나 충돌하므로 채택하지 않는다. 토스페이스�
 
 ## 3. 생성 구조와 수정 경계
 
-`starter-kits/*`와 `complete-examples/*`는 생성 결과물이다. 직접 수정하지
-않는다.
+`app/`은 생성 결과물이다. 직접 수정하지 않는다.
 
 수정 원본은 다음과 같다.
 
@@ -61,9 +60,9 @@ TDS와 중복되거나 충돌하므로 채택하지 않는다. 토스페이스�
   `tooling/overlays/<kit>/starter`,
   `tooling/overlays/<kit>/complete`
 - 앱 이름, 색상, 태그라인:
-  `tooling/kits.mjs`
+  `tooling/project.mjs`
 
-변경 후 `tooling/scripts/generate-kits.mjs`로 8개 결과를 다시 생성한다.
+변경 후 `tooling/scripts/generate-app.mjs`로 `app/`을 다시 생성한다.
 starter와 complete는 같은 핵심 루프와 디자인 언어를 공유하되 기존 교육
 계약을 보존한다.
 
@@ -305,7 +304,7 @@ TDS Toast를 사용한다.
 구현 후 다음 순서로 검증한다.
 
 1. 모델 단위 테스트와 새 상태 전이 테스트
-2. `tooling/scripts/generate-kits.mjs`로 8개 결과 생성
+2. `tooling/scripts/generate-app.mjs`로 `app/` 생성
 3. 생성 결과 최신성 검사
 4. 8개 프로젝트의 설정 검증, 타입 검사, 테스트, 빌드
 5. 390×844에서 4개 complete 앱의 초기, 핵심 행동, 결과 화면 확인

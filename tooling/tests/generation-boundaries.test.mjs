@@ -10,16 +10,10 @@ import {
   publishStagedOutputs,
 } from "../scripts/lib/generation.mjs";
 
-test("accepts only direct generated project paths", () => {
-  assert.doesNotThrow(() =>
-    assertGeneratedTarget("/repo", "/repo/starter-kits/01-weekend-activities"),
-  );
+test("accepts only the declared generated project path", () => {
+  assert.doesNotThrow(() => assertGeneratedTarget("/repo", "/repo/app"));
   assert.throws(
-    () =>
-      assertGeneratedTarget(
-        "/repo",
-        "/repo/starter-kits/01-weekend-activities/nested",
-      ),
+    () => assertGeneratedTarget("/repo", "/repo/app/nested"),
     /non-generated/,
   );
   assert.throws(
@@ -27,7 +21,11 @@ test("accepts only direct generated project paths", () => {
     /non-generated/,
   );
   assert.throws(
-    () => assertGeneratedTarget("/repo", "/repo/starter-kits/../docs"),
+    () => assertGeneratedTarget("/repo", "/repo/app/../docs"),
+    /non-generated/,
+  );
+  assert.throws(
+    () => assertGeneratedTarget("/repo", "/repo"),
     /non-generated/,
   );
 });
@@ -49,9 +47,9 @@ test("missing optional overlay is ignored", async () => {
 test("rejects an output root symlink before any mutation", async () => {
   const root = await mkdtemp(join(tmpdir(), "generation-link-"));
   const outside = await mkdtemp(join(tmpdir(), "generation-outside-"));
-  await symlink(outside, join(root, "starter-kits"));
+  await symlink(outside, join(root, "app"));
   await assert.rejects(
-    () => publishStagedOutputs(root, [{ stage: outside, final: join(root, "starter-kits", "kit") }]),
+    () => publishStagedOutputs(root, [{ stage: outside, final: join(root, "app") }]),
     /symbolic-link output ancestor/,
   );
 });
@@ -59,8 +57,9 @@ test("rejects an output root symlink before any mutation", async () => {
 test("restores every original after an injected mid-publication failure", async () => {
   const root = await mkdtemp(join(tmpdir(), "generation-rollback-"));
   const staged = join(root, "stage");
-  const outputs = ["one", "two"].map((name) => ({
-    stage: join(staged, name), final: join(root, "starter-kits", name),
+  const names = ["one", "two"];
+  const outputs = names.map((name) => ({
+    stage: join(staged, name), final: join(root, name),
   }));
   for (const output of outputs) {
     await mkdir(output.stage, { recursive: true });
@@ -70,6 +69,7 @@ test("restores every original after an injected mid-publication failure", async 
   }
   let calls = 0;
   await assert.rejects(() => publishStagedOutputs(root, outputs, {
+    generatedPaths: new Set(names),
     renameFn: async (from, to) => {
       calls += 1;
       if (calls === 4) throw new Error("injected publication failure");

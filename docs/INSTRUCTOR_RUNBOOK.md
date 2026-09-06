@@ -2,7 +2,7 @@
 
 ## 수업 전
 
-- node 24.8.0, pnpm 11.9.0, 공통 연습 폴더(`starter-kits/03-travel-style-test`)의 `pnpm install`과 `pnpm doctor`를 확인해요.
+- node 24.8.0, pnpm 11.9.0, 공통 연습 폴더(`app/`)의 `pnpm install`과 `pnpm doctor`를 확인해요.
 - 오전 공통 자료는 저장소 `common-demo/` 폴더에 있어요. 기획서 `PRD.md`, 오전 프롬프트 `PROMPT.md`, 기준본 `index.html`, 완성본 `final.html`. 수강생이 받는 ZIP에 같이 들어가니 따로 배포하지 않아요.
 - 콘솔 작업 공간만 미리 만들었다면, 앱 등록과 영문 이름은 당일 오후에 해요.
 - 브라우저, 휴대폰 QR, 콘솔, 외부 서버는 이 문서의 컴퓨터 확인과 별개예요. 확인 전에는 PENDING으로 둬요.

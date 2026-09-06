@@ -1,17 +1,21 @@
 import { cp, lstat, mkdir, rename, rm } from "node:fs/promises";
 import { dirname, relative, resolve, sep } from "node:path";
 
-const OUTPUT_ROOTS = new Set(["starter-kits", "complete-examples"]);
+/** 생성기가 통째로 교체해도 되는, 저장소 루트 기준 경로예요. */
+export const GENERATED_PATHS = new Set(["app"]);
 
-export function assertGeneratedTarget(repositoryRoot, target) {
-  const segmentPath = relative(resolve(repositoryRoot), resolve(target));
-  const segments = segmentPath.split(/[\\/]+/);
+export function assertGeneratedTarget(
+  repositoryRoot,
+  target,
+  generatedPaths = GENERATED_PATHS,
+) {
+  const relativePath = relative(resolve(repositoryRoot), resolve(target));
+  const segments = relativePath.split(/[\\/]+/);
   if (
-    segmentPath === "" ||
-    segmentPath.startsWith("..") ||
+    relativePath === "" ||
+    relativePath.startsWith("..") ||
     segments.includes("..") ||
-    !OUTPUT_ROOTS.has(segments[0]) ||
-    segments.length !== 2
+    !generatedPaths.has(segments.join("/"))
   ) {
     throw new Error(`Refusing to replace non-generated path: ${target}`);
   }
@@ -53,10 +57,14 @@ export async function copyOptionalTree(copyTree, source, target) {
   }
 }
 
-export async function publishStagedOutputs(repositoryRoot, outputs, { renameFn = rename } = {}) {
+export async function publishStagedOutputs(
+  repositoryRoot,
+  outputs,
+  { renameFn = rename, generatedPaths = GENERATED_PATHS } = {},
+) {
   const finals = new Set();
   for (const output of outputs) {
-    assertGeneratedTarget(repositoryRoot, output.final);
+    assertGeneratedTarget(repositoryRoot, output.final, generatedPaths);
     await assertSafeOutputLocation(repositoryRoot, output.final);
     if (finals.has(resolve(output.final)))
       throw new Error(`Refusing duplicate generated target: ${output.final}`);

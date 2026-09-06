@@ -1,5 +1,5 @@
-# {{COURSE_DISPLAY_NAME}}
+# {{COURSE_DISPLAY_NAME}} — 수업 공통 연습 폴더
 
-이 폴더는 **{{COURSE_FLAVOR}}** 예시예요. starter는 핵심 흐름만 담은 연습용이고, complete는 같은 종류의 앱에 기능을 하나 더 넣어 둔 참고용이에요. 수업에서 여는 폴더는 `starter-kits/03-travel-style-test` 하나예요.
+수업 오후에는 전원이 이 폴더 하나를 써요. 처음 화면은 오전에 다 같이 만든 「{{COURSE_DISPLAY_NAME}}」(상자를 열면 금액이 쌓이는 화면)이 앱 뼈대에 들어가 있는 모습이에요. 이 화면을 자유 주제로 준비한 내 HTML 화면으로 바꾸는 게 할 일이에요. 미리 준비한 HTML이나 오전에 배운 순서로 만든 HTML 모두 쓸 수 있어요.
 
 할 일은 `README.md`만 따라요.
