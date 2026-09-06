@@ -13,6 +13,29 @@ const FORBIDDEN_EXTENSIONS = new Set([
   ".jks",
   ".mobileprovision",
 ]);
+/** 미디어·문서 바이너리는 텍스트 패턴 검사에서 제외해요. 파일 이름 검사는 그대로 적용돼요. */
+const BINARY_EXTENSIONS = new Set([
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".webp",
+  ".ico",
+  ".mp4",
+  ".mov",
+  ".webm",
+  ".m4a",
+  ".mp3",
+  ".wav",
+  ".pdf",
+  ".pptx",
+  ".zip",
+  ".ait",
+  ".woff",
+  ".woff2",
+  ".ttf",
+  ".otf",
+]);
 const TEXT_RISKS = [
   /BEGIN (?:RSA|OPENSSH|EC)? ?PRIVATE KEY/,
   /\b(?!hello@groundcode\.io\b)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i,
@@ -74,7 +97,8 @@ export async function assertPublicSafe(root) {
 }
 
 function isText(file) {
-  return !FORBIDDEN_EXTENSIONS.has(extname(file).toLowerCase());
+  const extension = extname(file).toLowerCase();
+  return !FORBIDDEN_EXTENSIONS.has(extension) && !BINARY_EXTENSIONS.has(extension);
 }
 async function listFiles(root) {
   const output = [];

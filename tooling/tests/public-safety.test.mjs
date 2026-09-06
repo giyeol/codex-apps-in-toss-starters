@@ -75,3 +75,14 @@ test("rejects private keys, unsafe ad IDs, and excluded-tree symlinks", async ()
   await symlink("/etc/hosts", join(fixture, "docs", "superpowers", "link"));
   await assert.rejects(() => assertPublicSafe(fixture), /docs\/superpowers\/link: symbolic link/);
 });
+
+test("skips text patterns inside media binaries but still checks their names", async () => {
+  const fixture = await mkdtemp(join(tmpdir(), "public-safety-binary-"));
+  const risky = "person" + "@gmail.com";
+  await writeFile(join(fixture, "clip.mp4"), Buffer.from(risky, "utf8"));
+  await writeFile(join(fixture, "shot.png"), Buffer.from(risky, "utf8"));
+  await assert.doesNotReject(() => assertPublicSafe(fixture));
+  await writeFile(join(fixture, "notes.txt"), risky);
+  await assert.rejects(() => assertPublicSafe(fixture), /forbidden source pattern/);
+  assert.equal(forbiddenFileReason("계약서.mp4"), "contract file");
+});
