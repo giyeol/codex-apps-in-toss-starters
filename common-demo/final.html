@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>선물 뽑기</title>
+<style>
+  body { margin: 0; font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; background: #F4F5F7; color: #191F28; }
+  main { max-width: 420px; margin: 0 auto; padding: 24px 20px 40px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .sub { color: #6B7684; margin: 0 0 20px; font-size: 16px; }
+  .total { background: #fff; border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
+  .total strong { font-size: 28px; color: #FF6000; }
+  #grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .box { aspect-ratio: 1; border: 0; border-radius: 16px; background: #fff; font-size: 34px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  .box.open { background: #FFF4ED; font-size: 20px; font-weight: 700; color: #FF6000; cursor: default; }
+  #notice { margin-top: 20px; padding: 16px; border-radius: 16px; background: #fff; min-height: 24px; font-size: 16px; }
+  .reset { margin-top: 12px; width: 100%; padding: 14px; border: 0; border-radius: 12px; background: #3182F6; color: #fff; font-size: 16px; }
+  .ad { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; color: #fff; font-size: 20px; text-align: center; line-height: 1.5; }
+  .ad.show { display: flex; }
+</style>
+</head>
+<body>
+<main>
+  <h1>선물 뽑기</h1>
+  <p class="sub">상자를 열면 1~3원이 쌓여요. 9개 다 열면 바꿀 수 있어요.</p>
+  <div class="total"><span>쌓인 금액</span><strong id="total">0원</strong></div>
+  <div id="grid"></div>
+  <div id="notice">상자를 하나 골라 보세요.</div>
+  <button class="reset" type="button">처음부터</button>
+</main>
+<div class="ad" id="ad"><div>광고 보는 중…<br /><small>실제 앱에서는 여기서 광고가 나와요</small></div></div>
+<script>
+  const KEY = "course.gift.v1";
+  const grid = document.getElementById("grid");
+  const totalEl = document.getElementById("total");
+  const notice = document.getElementById("notice");
+  const ad = document.getElementById("ad");
+  let state = load();
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || { opened: [], total: 0 }; } catch { return { opened: [], total: 0 }; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} }
+  function render() {
+    grid.innerHTML = "";
+    for (let i = 0; i < 9; i++) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "box";
+      const hit = state.opened.find((o) => o.i === i);
+      if (hit) { b.classList.add("open"); b.textContent = hit.won + "원"; b.disabled = true; }
+      else { b.textContent = "🎁"; b.addEventListener("click", () => open(i)); }
+      grid.appendChild(b);
+    }
+    totalEl.textContent = state.total + "원";
+    if (state.opened.length === 9) notice.textContent = "9개 다 열었어요! 실제 앱에서는 여기서 토스 포인트로 교환해요.";
+    else if (state.opened.length) notice.textContent = state.opened.length + "개 열었어요. " + (9 - state.opened.length) + "개 남았어요.";
+    else notice.textContent = "상자를 하나 골라 보세요.";
+  }
+  function open(i) {
+    if (ad.classList.contains("show")) return;
+    ad.classList.add("show");
+    setTimeout(() => {
+      ad.classList.remove("show");
+      const won = 1 + Math.floor(Math.random() * 3);
+      state.opened.push({ i, won }); state.total += won; save(); render();
+    }, 2000);
+  }
+  document.querySelector(".reset").addEventListener("click", () => { state = { opened: [], total: 0 }; save(); render(); });
+  render();
+</script>
+</body>
+</html>

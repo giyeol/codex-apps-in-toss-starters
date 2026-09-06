@@ -2,7 +2,7 @@
 
 이 폴더는 비공식 Apps in Toss 수업용 연습 폴더예요. Toss 공식 지원이 아니에요.
 
-수강생이 컴퓨터용 ChatGPT의 Codex로 **이 폴더**를 연 상태예요. 오전에 만든 웹페이지 초안의 글을 이 작은 앱에 넣는 단계예요.
+수강생이 컴퓨터용 ChatGPT의 Codex로 **이 폴더**를 연 상태예요. 자유 주제로 준비한 내 HTML 화면(`REFERENCE.html`)을 이 작은 앱의 화면으로 옮기는 단계예요. 미리 준비한 HTML을 활용해도 되고, 오전에 배운 순서로 만든 HTML을 써도 돼요.
 
 ## 시작 조건
 
@@ -12,8 +12,9 @@
 
 ## 해도 되는 일
 
+- `src/features/active` 화면을 `REFERENCE.html`에 맞게 바꾸기. 뼈대와 TDS 구성은 유지
 - `src/content` 폴더의 글과 예시 내용
-- `pnpm setup`으로 앱 이름과 대표 색상 넣기. 결과는 `service.config.json`에 저장돼요.
+- 강사와 `pnpm setup`으로 처음 QR 설정하기. 설정한 앱 영문 이름(`appName`)과 화면 표시명은 유지하고, 대표 색상만 바꿔요. 결과는 `service.config.json`에 저장돼요.
 - `SERVICE_BRIEF.md`에 적힌 범위의 작은 변경
 - 변경 후 `pnpm check`
 
@@ -21,6 +22,6 @@
 
 - 앱을 처음부터 다시 만들기
 - `src/platform` 폴더 수정
-- 로그인, 결제, 실제 광고 번호, 새 서버, 다른 회사 계정, 앱 뼈대 교체
+- 앱 뼈대(`src/app`, `src/ui`) 교체, 로그인, 결제, 실제 광고 번호, 새 서버, 다른 회사 계정
 - 수업용 토스 파일을 `pnpm build`로 만들기. `pnpm build:qr`을 쓰세요.
 - 이 폴더 밖의 `tooling/`이나 다른 연습 폴더를 수강생 실습으로 수정하기

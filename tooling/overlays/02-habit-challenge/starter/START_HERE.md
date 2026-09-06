@@ -2,4 +2,4 @@
 
 이 예시는 **기록하고 이어가는 앱**이에요. 오늘 했는지 적고, 7일 동안의 기록을 보는 흐름을 담아요.
 
-할 일은 `README.md`만 따라요. complete는 같은 흐름에 3일 연속으로 했을 때 축하 문구를 더한 참고용이에요. 예전에 브라우저에 저장해 둔 기록이 섞이면 GitHub에서 받은 맨 위 폴더의 [`docs/RECOVERY.md`](../../docs/RECOVERY.md)를 봐요.
+수업에서 여는 폴더는 `starter-kits/03-travel-style-test` 하나예요. 이 폴더는 앱 크기와 화면 구성을 보는 참고 예시예요. 할 일은 `README.md`만 따라요. complete는 같은 흐름에 3일 연속으로 했을 때 축하 문구를 더한 참고용이에요. 예전에 브라우저에 저장해 둔 기록이 섞이면 GitHub에서 받은 맨 위 폴더의 [`docs/RECOVERY.md`](../../docs/RECOVERY.md)를 봐요.
